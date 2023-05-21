@@ -1,0 +1,29 @@
+{
+	"id": "04c8243a-2c17-4e0b-8814-05dc4371e91b",
+	"values": [
+		{
+			"key": "authToken",
+			"value": "demoValue",
+			"enabled": true
+		},
+		{
+			"key": "baseUrl",
+			"value": "https://cartisv1-staging.asteria.co.in/api/core/v1",
+			"enabled": true
+		},
+		{
+			"key": "baseUrlAuthz",
+			"value": "https://cartisv1-staging.asteria.co.in/api/authz/v1",
+			"enabled": true
+		},
+		{
+			"key": "baseUrlFileUpload",
+			"value": "https://cartisv1-staging.asteria.co.in/api/file/v1",
+			"enabled": true
+		}
+	],
+	"name": "Asterai Workspace Globals",
+	"_postman_variable_scope": "globals",
+	"_postman_exported_at": "2021-01-27T09:40:51.947Z",
+	"_postman_exported_using": "Postman/7.36.1"
+}

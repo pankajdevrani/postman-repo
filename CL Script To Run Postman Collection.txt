@@ -1,0 +1,1 @@
+newman run https://api.getpostman.com/collections/$(PostmanCollectionName)?apikey=$(PostmanAPIKey) -e $(EnvFileName).json  --insecure -r cli,htmlextra --reporter-htmlextra-export $(System.DefaultWorkingDirectory)/$(TestResultFileName)

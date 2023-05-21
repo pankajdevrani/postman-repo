@@ -1,0 +1,79 @@
+{
+	"id": "b1e009f5-1bb4-42e6-a458-4c7b58226bdb",
+	"name": "Production",
+	"values": [
+		{
+			"key": "orgName",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "orgOwnerName",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "orgEmailAddress",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "orgUuid",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "siteName",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "siteUuid",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "surveyName",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "surveyUuid",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "rasterName",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "rasterType",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "rasterUuid",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "baseUrl",
+			"value": "https://app.asteria.co.in/api/core/v1",
+			"enabled": true
+		},
+		{
+			"key": "baseUrlAuthz",
+			"value": "https://app.asteria.co.in/api/authz/v1",
+			"enabled": true
+		},
+		{
+			"key": "baseUrlFileUpload",
+			"value": "https://app.asteria.co.in/api/file/v1",
+			"enabled": true
+		}
+	],
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2021-02-11T07:38:30.199Z",
+	"_postman_exported_using": "Postman/8.0.5"
+}

@@ -1,0 +1,508 @@
+{
+	"info": {
+		"_postman_id": "f6b5e793-d3c1-4d87-b476-4352da9fa13a",
+		"name": "CartisTests - API Requests Copy",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Individual API Requests",
+			"item": [
+				{
+					"name": "Organisation",
+					"item": [
+						{
+							"name": "Get all the organisation User has access to",
+							"item": [
+								{
+									"name": "Get all the organisation User has access to",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "13f9a607-1e59-4a69-9b18-ec7d2c21dd4e",
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"pm.test(\"Response body has status as 'success'\", function () {\r",
+													"    var jsonData = pm.response.json();\r",
+													"    pm.expect(jsonData.status).to.eql(\"success\");\r",
+													"});\r",
+													"pm.test(\"Content-Type is present\", function () {\r",
+													"    pm.response.to.have.header(\"Content-Type\");\r",
+													"});\r",
+													"pm.test(\"Status code name has string\", function () {\r",
+													"    pm.response.to.have.status(\"OK\");\r",
+													"});\r",
+													"\r",
+													"var schema = {\r",
+													"  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r",
+													"  \"type\": \"object\",\r",
+													"  \"properties\": {\r",
+													"    \"status\": {\r",
+													"      \"type\": \"string\",\r",
+													"      \"enum\":[\r",
+													"            \"success\",\r",
+													"            \"failure\",\r",
+													"            \"queued\",\r",
+													"            \"pending\",\r",
+													"            \"forbidden\"\r",
+													"      ]\r",
+													"    },\r",
+													"    \"message\": {\r",
+													"      \"type\": \"string\"\r",
+													"    },\r",
+													"    \"data\": {\r",
+													"      \"type\": \"object\",\r",
+													"      \"properties\": {\r",
+													"        \"organisations\": {\r",
+													"          \"type\": \"array\",\r",
+													"          \"minItems\": 0,\r",
+													"          \"items\": {\r",
+													"            \"type\": \"object\",\r",
+													"            \"properties\": {\r",
+													"              \"uuid\": {\r",
+													"                \"type\": \"string\"\r",
+													"              },\r",
+													"              \"name\": {\r",
+													"                \"type\": \"string\"\r",
+													"              },\r",
+													"              \"description\": {\r",
+													"                \"type\": [\"string\", \"null\" ]\r",
+													"              },\r",
+													"              \"permalink\": {\r",
+													"                \"type\": \"string\"\r",
+													"              },\r",
+													"              \"createdAt\": {\r",
+													"                \"type\": \"string\"\r",
+													"              },\r",
+													"              \"updatedAt\": {\r",
+													"                \"type\": \"string\"\r",
+													"              },\r",
+													"              \"createdBy\": {\r",
+													"                \"type\": [\r",
+													"                  \"string\",\r",
+													"                  \"null\"\r",
+													"                ]\r",
+													"              },\r",
+													"              \"logoUrl\": {\r",
+													"                \"type\": [\"string\", \"null\" ]\r",
+													"              },\r",
+													"              \"organisationOwner\": {\r",
+													"                \"type\": [\r",
+													"                  \"object\",\r",
+													"                  \"null\"\r",
+													"                ],\r",
+													"                \"properties\": {\r",
+													"                  \"uuid\": {\r",
+													"                    \"type\": \"string\"\r",
+													"                  },\r",
+													"                  \"name\": {\r",
+													"                    \"type\": \"string\"\r",
+													"                  },\r",
+													"                  \"email\": {\r",
+													"                    \"type\": \"string\"\r",
+													"                  },\r",
+													"                  \"role\": {\r",
+													"                    \"type\": [ \"string\", \"null\" ]\r",
+													"                  },\r",
+													"                  \"createdAt\": {\r",
+													"                    \"type\": \"string\"\r",
+													"                  },\r",
+													"                  \"updatedAt\": {\r",
+													"                    \"type\": \"string\"\r",
+													"                  },\r",
+													"                  \"createdBy\": {\r",
+													"                    \"type\": \"string\"\r",
+													"                  }\r",
+													"                },\r",
+													"                \"required\": [\r",
+													"                  \"uuid\",\r",
+													"                  \"name\",\r",
+													"                  \"email\",\r",
+													"                  \"role\",\r",
+													"                  \"createdAt\",\r",
+													"                  \"updatedAt\",\r",
+													"                  \"createdBy\"\r",
+													"                ],\r",
+													"                \"additionalProperties\":false\r",
+													"              }\r",
+													"            },\r",
+													"            \"required\": [\r",
+													"              \"uuid\",\r",
+													"              \"name\",\r",
+													"              \"description\",\r",
+													"              \"permalink\",\r",
+													"              \"createdAt\",\r",
+													"              \"updatedAt\",\r",
+													"              \"createdBy\",\r",
+													"              \"logoUrl\",\r",
+													"              \"organisationOwner\"\r",
+													"            ],\r",
+													"            \"additionalProperties\":false\r",
+													"          }\r",
+													"        }\r",
+													"      },\r",
+													"      \"required\": [\r",
+													"        \"organisations\"\r",
+													"      ],\r",
+													"      \"additionalProperties\":false\r",
+													"    }\r",
+													"  },\r",
+													"  \"required\": [\r",
+													"    \"status\",\r",
+													"    \"message\",\r",
+													"    \"data\"\r",
+													"  ],\r",
+													"  \"additionalProperties\":false\r",
+													"};\r",
+													"\r",
+													"pm.test('Schema is valid', function() {\r",
+													"    var result = tv4.validateResult(pm.response.json(),schema);\r",
+													"    if(!result.valid){\r",
+													"        console.log(result);\r",
+													"    }\r",
+													"  pm.expect(result.valid).to.be.true;\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disableBodyPruning": true
+									},
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrl}}/organisations",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"organisations"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get all org - Invalid accept header",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "bd3ad20f-ca5d-45f6-b38e-5152e818ce20",
+												"exec": [
+													"pm.test(\"Status code is 406\", function () {\r",
+													"    pm.response.to.have.status(406);\r",
+													"});\r",
+													"var message = \"Could not satisfy the request Accept header.\";\r",
+													"pm.test(\"Response body message is '\"+message+\"'\", function () {\r",
+													"    pm.expect(pm.response.json().message).to.eql(message);\r",
+													"});\r",
+													"pm.test(\"Response body status is 'failure'\", function () {\r",
+													"    pm.expect(pm.response.json().status).to.eql(\"failure\");\r",
+													"});\r",
+													"pm.test(\"Content-Type is present\", function () {\r",
+													"    pm.response.to.have.header(\"Content-Type\");\r",
+													"});\r",
+													"pm.test(\"Status code name has string\", function () {\r",
+													"    pm.response.to.have.status(\"Not Acceptable\");\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disabledSystemHeaders": {}
+									},
+									"request": {
+										"method": "GET",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/xml",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrl}}/organisations",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"organisations"
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "User is not logged in",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/v2/organisations",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v2",
+														"organisations"
+													]
+												}
+											},
+											"status": "Unauthorized",
+											"code": 401,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										},
+										{
+											"name": "Fired on the main/landing page",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/v2/organisations",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v2",
+														"organisations"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n \"status\": \"<string>\",\n \"message\": \"<string>\",\n \"data\": {\n  \"organisations\": [\n   {\n    \"name\": \"<string>\",\n    \"description\": \"<string>\",\n    \"permalink\": \"<string>\",\n    \"uuid\": \"<string>\",\n    \"metaData\": {\n     \"userRole\": {}\n    }\n   },\n   {\n    \"name\": \"<string>\",\n    \"description\": \"<string>\",\n    \"permalink\": \"<string>\",\n    \"uuid\": \"<string>\",\n    \"metaData\": {\n     \"userRole\": {}\n    }\n   }\n  ]\n }\n}"
+										}
+									]
+								},
+								{
+									"name": "Get all org - Invalid auth token",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"id": "d6d8ea11-3d21-4b03-b5ae-04c91c083931",
+												"exec": [
+													"pm.test(\"Status code is 401\", function () {\r",
+													"    pm.response.to.have.status(401);\r",
+													"});\r",
+													"pm.test(\"response body message is 'Failed Request Due To Validation'\", function () {\r",
+													"    pm.expect(pm.response.json().message).to.eql(\"Failed Request Due To Validation\");\r",
+													"});\r",
+													"pm.test(\"response body status value is 'failure'\", function () {\r",
+													"    var jsonData = pm.response.json();\r",
+													"    pm.expect(jsonData.status).to.eql(\"failure\");\r",
+													"});\r",
+													"pm.test(\"Content-Type is present\", function () {\r",
+													"    pm.response.to.have.header(\"Content-Type\");\r",
+													"});\r",
+													"pm.test(\"Status code name has Unauthorized\", function () {\r",
+													"    pm.response.to.have.status(\"Unauthorized\");\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ik1qTkZRVUkyT1RRM01qTXpOa1l4TmpCQ04wSTVNa0kxUmpFNVFVSkVOelkzTnpnNFJqTXpRZyJ9.eyJodHRwczovL2V4YW1wbGUuY29tL3JvbGVzIjpbInVzZXIiXSwiaHR0cHM6Ly9kamFuZ28td2ViYXBwL3JvbGUiOiJ1c2VyIiwibmlja25hbWUiOiJwYW5rYWouZGV2cmFuaSIsIm5hbWUiOiJwYW5rYWouZGV2cmFuaUBhc3RlcmlhLmNvLmluIiwicGljdHVyZSI6Imh0dHBzOi8vcy5ncmF2YXRhci5jb20vYXZhdGFyLzRjN2YzYzM0OWNkYzkzZmMxODVmMTMzMThhZjIzMjcxP3M9NDgwJnI9cGcmZD1odHRwcyUzQSUyRiUyRmNkbi5hdXRoMC5jb20lMkZhdmF0YXJzJTJGcGEucG5nIiwidXBkYXRlZF9hdCI6IjIwMjAtMDYtMTBUMDc6Mzc6MjEuNDM4WiIsImlzcyI6Imh0dHBzOi8vaW5zaWdodDEuYXV0aDAuY29tLyIsInN1YiI6ImF1dGgwfDVlYzdiMTBjZTZmNGUwMGJmMjAzNzZjMyIsImF1ZCI6IlNzTENHTmdnMHlBN0I3c0g1ZU5WTUZtQ1A5SlZkZGUzIiwiaWF0IjoxNTkxODc4OTI1LCJleHAiOjE1OTE5MTQ5MjV9.b-FwIG8vG9rtPDVAhQjlf2tzV9nlq8RFqL1w264skuxsXR01b067gXzOAh5i0VXQ_J5WDMTV-DDkpeUZwE_m57Tl1jSJ_4n0dSWFd39_TI0jNiDQ23qt_OfmDTjEVf0b7GMj3hDk5Vwi0S7BumpE67jX2Pk1QayPXpfBGz2z3kC8qi1pXddWnCPB_E-LtZ6fwmbyOQ-HDSbkcdadBlqtRAPpNWx7APOf-6XbdDB6nF19s_BD1oKJNX2ieKqfV3Ggf2opGHtwrvusd2yFYnCbvdy9pnOTsB4SmrZUMDEArAmTTp5pXqx6UytJ1TQ2fqsBE6DEPCwYK_jLL7QLjFmsWR",
+													"type": "string"
+												}
+											]
+										},
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/organisations",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"organisations"
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "User is not logged in",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/v2/organisations",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v2",
+														"organisations"
+													]
+												}
+											},
+											"status": "Unauthorized",
+											"code": 401,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										},
+										{
+											"name": "Fired on the main/landing page",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/v2/organisations",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v2",
+														"organisations"
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n \"status\": \"<string>\",\n \"message\": \"<string>\",\n \"data\": {\n  \"organisations\": [\n   {\n    \"name\": \"<string>\",\n    \"description\": \"<string>\",\n    \"permalink\": \"<string>\",\n    \"uuid\": \"<string>\",\n    \"metaData\": {\n     \"userRole\": {}\n    }\n   },\n   {\n    \"name\": \"<string>\",\n    \"description\": \"<string>\",\n    \"permalink\": \"<string>\",\n    \"uuid\": \"<string>\",\n    \"metaData\": {\n     \"userRole\": {}\n    }\n   }\n  ]\n }\n}"
+										}
+									]
+								}
+							],
+							"protocolProfileBehavior": {},
+							"_postman_isSubFolder": true
+						}
+					],
+					"protocolProfileBehavior": {},
+					"_postman_isSubFolder": true
+				}
+			],
+			"description": "This collection is created to test all different scenarios for a single API using different requests.",
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{authToken}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "a760d3dc-9b78-49c3-a35c-4a2c3b2becee",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "a2e1ce27-5b0b-46a7-b27b-c22e8ff18923",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			],
+			"protocolProfileBehavior": {}
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{authToken}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "480834db-f417-4dd8-9161-756146b69976",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "67259574-8dbe-4eee-a9a2-89aa84e4ba31",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"protocolProfileBehavior": {}
+}

@@ -1,0 +1,5168 @@
+{
+	"info": {
+		"_postman_id": "88c093f8-aab4-41c0-8a22-f641db80797c",
+		"name": "FileUpload API Tests",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Individual API Requests",
+			"item": [
+				{
+					"name": "FileUpload",
+					"item": [
+						{
+							"name": "Prerequisites",
+							"item": [
+								{
+									"name": "Create an organisation for File Upload",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"if(pm.expect(pm.response.json().status).to.eql(\"success\")){\r",
+													"pm.environment.set(\"orgUuid\", pm.response.json().data.organisation.uuid);\r",
+													"}\r",
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"pm.test(\"Response body has status as 'success'\", function () {\r",
+													"    pm.expect(pm.response.json().status).to.eql(\"success\");\r",
+													"});\r",
+													"pm.test(\"Response Body message is 'Organisation Created'\", function () {\r",
+													"    var jsonData = pm.response.json();\r",
+													"    pm.expect(jsonData.message).to.eql(\"Organisation Created\");\r",
+													"});\r",
+													"pm.test(\"Content-Type is present\", function () {\r",
+													"    pm.response.to.have.header(\"Content-Type\")  ;\r",
+													"});\r",
+													"pm.test(\"Status code name has string\", function () {\r",
+													"    pm.response.to.have.status(\"OK\");\r",
+													"});\r",
+													"\r",
+													"var schema = {\r",
+													"  \"$schema\": \"{{baseUrl}}/organisation\",\r",
+													"  \"type\": \"object\",\r",
+													"  \"properties\": {\r",
+													"    \"status\": {\r",
+													"      \"type\": \"string\",\r",
+													"      \"enum\":[\r",
+													"            \"success\",\r",
+													"            \"failure\",\r",
+													"            \"queued\",\r",
+													"            \"pending\",\r",
+													"            \"forbidden\"\r",
+													"      ]\r",
+													"    },\r",
+													"    \"message\": {\r",
+													"      \"type\": \"string\"\r",
+													"    },\r",
+													"    \"data\": {\r",
+													"      \"type\": \"object\",\r",
+													"      \"properties\": {\r",
+													"        \"organisation\": {\r",
+													"          \"type\": \"object\",\r",
+													"          \"properties\": {\r",
+													"            \"uuid\": {\r",
+													"              \"type\": \"string\"\r",
+													"            },\r",
+													"            \"name\": {\r",
+													"              \"type\": \"string\"\r",
+													"            },\r",
+													"            \"description\": {\r",
+													"              \"type\": \"null\"\r",
+													"            },\r",
+													"            \"permalink\": {\r",
+													"              \"type\": \"string\"\r",
+													"            },\r",
+													"            \"createdAt\": {\r",
+													"              \"type\": \"string\"\r",
+													"            },\r",
+													"            \"updatedAt\": {\r",
+													"              \"type\": \"string\"\r",
+													"            },\r",
+													"            \"createdBy\": {\r",
+													"              \"type\": \"string\"\r",
+													"            },\r",
+													"            \"logoUrl\": {\r",
+													"              \"type\": \"null\"\r",
+													"            },\r",
+													"            \"organisationOwner\": {\r",
+													"              \"type\": \"object\",\r",
+													"              \"properties\": {\r",
+													"                \"uuid\": {\r",
+													"                  \"type\": \"string\"\r",
+													"                },\r",
+													"                \"name\": {\r",
+													"                  \"type\": \"string\"\r",
+													"                },\r",
+													"                \"email\": {\r",
+													"                  \"type\": \"string\"\r",
+													"                },\r",
+													"                \"role\": {\r",
+													"                  \"type\": \"null\"\r",
+													"                },\r",
+													"                \"createdAt\": {\r",
+													"                  \"type\": \"string\"\r",
+													"                },\r",
+													"                \"updatedAt\": {\r",
+													"                  \"type\": \"string\"\r",
+													"                },\r",
+													"                \"createdBy\": {\r",
+													"                  \"type\": \"string\"\r",
+													"                }\r",
+													"              },\r",
+													"              \"required\": [\r",
+													"                \"uuid\",\r",
+													"                \"name\",\r",
+													"                \"email\",\r",
+													"                \"role\",\r",
+													"                \"createdAt\",\r",
+													"                \"updatedAt\",\r",
+													"                \"createdBy\"\r",
+													"              ]\r",
+													"            }\r",
+													"          },\r",
+													"          \"required\": [\r",
+													"            \"uuid\",\r",
+													"            \"name\",\r",
+													"            \"description\",\r",
+													"            \"permalink\",\r",
+													"            \"createdAt\",\r",
+													"            \"updatedAt\",\r",
+													"            \"createdBy\",\r",
+													"            \"logoUrl\",\r",
+													"            \"organisationOwner\"\r",
+													"          ]\r",
+													"        }\r",
+													"      },\r",
+													"      \"required\": [\r",
+													"        \"organisation\"\r",
+													"      ],\r",
+													"      \"additionalProperties\":false\r",
+													"    }\r",
+													"  },\r",
+													"  \"required\": [\r",
+													"    \"status\",\r",
+													"    \"message\",\r",
+													"    \"data\"\r",
+													"  ],\r",
+													"  \"additionalProperties\":false\r",
+													"};\r",
+													"\r",
+													"pm.test('Schema is valid', function() {\r",
+													"  pm.expect(tv4.validate(pm.response.json(), schema)).to.be.true;\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													"pm.environment.set(\"orgName\",\"orgName_\"+Math.floor((Math.random() * 10000000000) + 1));\r",
+													"pm.environment.set(\"orgOwnerName\",\"orgOwnerName_\"+pm.environment.get(\"orgName\"));\r",
+													"pm.environment.set(\"orgEmailAddress\",\"orgEmailAdd_\"+pm.environment.get(\"orgName\")+\"@cartisdemo.co.in\");\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"{{orgName}}\",\n    \"organisationOwner\": {\n    \"name\": \"{{orgOwnerName}}\",\n    \"email\": \"{{orgEmailAddress}}\"\n  }\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/organisations",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"organisations"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Create a site for File Upload",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"if(pm.expect(pm.response.json().status).to.eql(\"success\")){\r",
+													"pm.environment.set(\"siteUuid\", pm.response.json().data.site.uuid);\r",
+													"}\r",
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"pm.test(\"Response body status is : 'success'\", function () {\r",
+													"    var jsonData = pm.response.json();\r",
+													"    pm.expect(pm.response.json().status).to.eql(\"success\");\r",
+													"});\r",
+													"pm.test(\"Response Body message is 'Project Created'\", function () {\r",
+													"    var jsonData = pm.response.json();\r",
+													"    pm.expect(jsonData.message).to.eql(\"Site Created\");\r",
+													"});\r",
+													"pm.test(\"Content-Type is present\", function () {\r",
+													"    pm.response.to.have.header(\"Content-Type\")  ;\r",
+													"});\r",
+													"pm.test(\"Status code name has string\", function () {\r",
+													"    pm.response.to.have.status(\"OK\");\r",
+													"});\r",
+													"pm.test(\"Response body site name is equal to : '\"+pm.environment.get(\"siteName\")+\"'\", function () {\r",
+													"    var jsonData = pm.response.json();\r",
+													"    pm.expect(jsonData.data.site.name).to.eql(pm.environment.get(\"siteName\"));\r",
+													"});\r",
+													"pm.test(\"Response body should have org uuid as expected.\", function () {\r",
+													"    var jsonData = pm.response.json();\r",
+													"    pm.expect(jsonData.data.site.organisationUuid).to.eql(pm.environment.get(\"orgUuid\"));\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													"pm.environment.set(\"siteName\",\"siteName\"+Math.floor((Math.random() * 10000000000) + 1));"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"name\": \"{{siteName}}\",\n  \"description\": \"description-{{siteName}}\",\n  \"locName\": \"locationName-{{siteName}}\",\n  \"locCoordinates\": {\n    \"lat\": 0,\n    \"lng\": 0\n  }\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/organisations/:organisationUuid/sites",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"organisations",
+												":organisationUuid",
+												"sites"
+											],
+											"variable": [
+												{
+													"key": "organisationUuid",
+													"value": "{{orgUuid}}",
+													"type": "string",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "When the create site call fails internally",
+											"originalRequest": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"name\": \"<string>\",\n    \"description\": \"<string>\",\n    \"location\": \"<string>\"\n}"
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/v2/organisation/:organisationUuid/site",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v2",
+														"organisation",
+														":organisationUuid",
+														"site"
+													],
+													"variable": [
+														{
+															"key": "organisationUuid"
+														}
+													]
+												}
+											},
+											"status": "Internal Server Error",
+											"code": 500,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										},
+										{
+											"name": "User is not logged in",
+											"originalRequest": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"name\": \"<string>\",\n    \"description\": \"<string>\",\n    \"location\": \"<string>\"\n}"
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/v2/organisation/:organisationUuid/site",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v2",
+														"organisation",
+														":organisationUuid",
+														"site"
+													],
+													"variable": [
+														{
+															"key": "organisationUuid"
+														}
+													]
+												}
+											},
+											"status": "Unauthorized",
+											"code": 401,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										},
+										{
+											"name": "Successful only when a user with sufficient permissions calls the API",
+											"originalRequest": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"name\": \"<string>\",\n    \"description\": \"<string>\",\n    \"location\": \"<string>\"\n}"
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/v2/organisation/:organisationUuid/site",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v2",
+														"organisation",
+														":organisationUuid",
+														"site"
+													],
+													"variable": [
+														{
+															"key": "organisationUuid"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n \"status\": \"<string>\",\n \"message\": \"<string>\",\n \"data\": {\n  \"site\": {\n   \"name\": \"<string>\",\n   \"description\": \"<string>\",\n   \"permalink\": \"<string>\",\n   \"uuid\": \"<string>\",\n   \"published\": \"<boolean>\",\n   \"publishedAt\": \"<number>\",\n   \"archived\": \"<boolean>\",\n   \"archivedAt\": \"<number>\",\n   \"organisationUuid\": \"<string>\",\n   \"location\": \"<string>\",\n   \"metaData\": {\n    \"userRole\": {}\n   }\n  }\n }\n}"
+										}
+									]
+								},
+								{
+									"name": "Create a survey for File Upload",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"pm.test(\"Response body status is : 'success'\", function () {\r",
+													"    pm.expect(pm.response.json().status).to.eql(\"success\");\r",
+													"});\r",
+													"pm.test(\"Response Body message is 'Survey Created'\", function () {\r",
+													"    pm.expect(pm.response.json().message).to.eql(\"Survey Created\");\r",
+													"});\r",
+													"pm.test(\"Content-Type is present\", function () {\r",
+													"    pm.response.to.have.header(\"Content-Type\")  ;\r",
+													"});\r",
+													"pm.test(\"Status code name has string\", function () {\r",
+													"    pm.response.to.have.status(\"OK\");\r",
+													"});\r",
+													"pm.test(\"Response body survey name is equal to : '\"+pm.environment.get(\"surveyName\")+\"'\", function () {\r",
+													"    pm.expect(pm.response.json().data.survey.name).to.eql(pm.environment.get(\"surveyName\"));\r",
+													"});\r",
+													"pm.test(\"Response body should have site uuid as expected.\", function () {\r",
+													"    pm.expect(pm.response.json().data.survey.siteUuid).to.eql(pm.environment.get(\"siteUuid\"));\r",
+													"});\r",
+													"if(pm.expect(pm.response.json().status).to.eql(\"success\")){\r",
+													"pm.environment.set(\"surveyUuid\", pm.response.json().data.survey.uuid);\r",
+													"}"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													"pm.environment.set(\"surveyName\",\"surveyName\"+Math.floor((Math.random() * 10000000000) + 1));"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n    \"name\": \"{{surveyName}}\",\n    \"description\": \"Survey description - {{surveyName}}\",\n    \"surveyFrom\": \"2020-02-01T00:00:00Z\",\n    \"surveyTo\": \"2020-02-01T00:00:00Z\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/organisations/:organisationUuid/sites/:siteUuid/surveys",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"organisations",
+												":organisationUuid",
+												"sites",
+												":siteUuid",
+												"surveys"
+											],
+											"variable": [
+												{
+													"key": "organisationUuid",
+													"value": "{{orgUuid}}",
+													"type": "string"
+												},
+												{
+													"key": "siteUuid",
+													"value": "{{siteUuid}}",
+													"type": "string"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Create a raster for File Upload",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													"pm.environment.set(\"rasterName\",\"rasterName\"+Math.floor((Math.random() * 10000000000) + 1));\r",
+													"//types = data.rasterType;\r",
+													"types = \"dtm\";\r",
+													"pm.environment.set(\"rasterType\", types);"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"pm.test(\"Response body status is : 'success'\", function () {\r",
+													"    pm.expect(pm.response.json().status).to.eql(\"success\");\r",
+													"});\r",
+													"pm.test(\"Response Body message is 'Raster Created'\", function () {\r",
+													"    pm.expect(pm.response.json().message).to.eql(\"Raster Created\");\r",
+													"});\r",
+													"pm.test(\"Content-Type is present\", function () {\r",
+													"    pm.response.to.have.header(\"Content-Type\")  ;\r",
+													"});\r",
+													"pm.test(\"Status code name has string\", function () {\r",
+													"    pm.response.to.have.status(\"OK\");\r",
+													"});\r",
+													"pm.test(\"Response body raster name is equal to : '\"+pm.environment.get(\"rasterName\")+\"'\", function () {\r",
+													"    pm.expect(pm.response.json().data.raster.name).to.eql(pm.environment.get(\"rasterName\"));\r",
+													"});\r",
+													"pm.test(\"Response body should have organisation uuid as expected.\", function () {\r",
+													"    pm.expect(pm.response.json().data.raster.refUuid.organisationUuid).to.eql(pm.environment.get(\"orgUuid\"));\r",
+													"});\r",
+													"pm.test(\"Response body should have site uuid as expected.\", function () {\r",
+													"    pm.expect(pm.response.json().data.raster.refUuid.siteUuid).to.eql(pm.environment.get(\"siteUuid\"));\r",
+													"});\r",
+													"pm.test(\"Response body should have survey uuid as expected.\", function () {\r",
+													"    pm.expect(pm.response.json().data.raster.refUuid.surveyUuid).to.eql(pm.environment.get(\"surveyUuid\"));\r",
+													"});\r",
+													"pm.environment.set(\"rasterUuid\", pm.response.json().data.raster.uuid);\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n \"name\": \"{{rasterName}}\",\n \"type\":\"{{rasterType}}\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/organisations/:organisationUuid/sites/:siteUuid/surveys/:surveyUuid/rasters",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"organisations",
+												":organisationUuid",
+												"sites",
+												":siteUuid",
+												"surveys",
+												":surveyUuid",
+												"rasters"
+											],
+											"variable": [
+												{
+													"key": "organisationUuid",
+													"value": "{{orgUuid}}",
+													"type": "string"
+												},
+												{
+													"key": "siteUuid",
+													"value": "{{siteUuid}}",
+													"type": "string"
+												},
+												{
+													"key": "surveyUuid",
+													"value": "{{surveyUuid}}",
+													"type": "string"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "When the create raster call fails internally",
+											"originalRequest": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"name\": \"<string>\",\n    \"rasterType\": \"<string>\"\n}"
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/v2/survey/:surveyUuid/raster",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v2",
+														"survey",
+														":surveyUuid",
+														"raster"
+													],
+													"variable": [
+														{
+															"key": "surveyUuid"
+														}
+													]
+												}
+											},
+											"status": "Internal Server Error",
+											"code": 500,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										},
+										{
+											"name": "User is not logged in",
+											"originalRequest": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"name\": \"<string>\",\n    \"rasterType\": \"<string>\"\n}"
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/v2/survey/:surveyUuid/raster",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v2",
+														"survey",
+														":surveyUuid",
+														"raster"
+													],
+													"variable": [
+														{
+															"key": "surveyUuid"
+														}
+													]
+												}
+											},
+											"status": "Unauthorized",
+											"code": 401,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										},
+										{
+											"name": "Successful only when a user with sufficient permissions calls the API",
+											"originalRequest": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"name\": \"<string>\",\n    \"rasterType\": \"<string>\"\n}"
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/v2/survey/:surveyUuid/raster",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v2",
+														"survey",
+														":surveyUuid",
+														"raster"
+													],
+													"variable": [
+														{
+															"key": "surveyUuid"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n \"status\": \"<string>\",\n \"message\": \"<string>\",\n \"data\": {\n  \"raster\": {\n   \"name\": \"<string>\",\n   \"permalink\": \"<string>\",\n   \"uuid\": \"<string>\",\n   \"rasterType\": \"<string>\",\n   \"geotiff\": {\n    \"uuid\": \"<string>\",\n    \"downloadURL\": \"<string>\",\n    \"cdnToken\": \"<string>\",\n    \"size\": \"<number>\",\n    \"bandsCount\": \"<number>\",\n    \"bandsInfo\": [\n     {\n      \"bandNumber\": \"<number>\",\n      \"bandName\": \"<string>\",\n      \"minValue\": \"<string>\",\n      \"maxValue\": \"<string>\"\n     },\n     {\n      \"bandNumber\": \"<number>\",\n      \"bandName\": \"<string>\",\n      \"minValue\": \"<string>\",\n      \"maxValue\": \"<string>\"\n     }\n    ],\n    \"bounds\": {\n     \"ne\": {\n      \"lat\": \"<number>\",\n      \"lng\": \"<number>\"\n     },\n     \"nw\": {\n      \"lat\": \"<number>\",\n      \"lng\": \"<number>\"\n     },\n     \"se\": {\n      \"lat\": \"<number>\",\n      \"lng\": \"<number>\"\n     },\n     \"sw\": {\n      \"lat\": \"<number>\",\n      \"lng\": \"<number>\"\n     }\n    },\n    \"outline\": {\n     \"type\": \"<string>\",\n     \"geometry\": {\n      \"type\": \"<string>\",\n      \"coordinates\": [\n       [\n        [\n         \"<number>\",\n         \"<number>\"\n        ],\n        [\n         \"<number>\",\n         \"<number>\"\n        ],\n        [\n         \"<number>\",\n         \"<number>\"\n        ]\n       ]\n      ]\n     },\n     \"properties\": \"<object>\"\n    }\n   },\n   \"cogeotiff\": {\n    \"uuid\": \"<string>\",\n    \"downloadURL\": \"<string>\",\n    \"cdnToken\": \"<string>\",\n    \"size\": \"<number>\",\n    \"bandsCount\": \"<number>\",\n    \"bandsInfo\": [\n     {\n      \"bandNumber\": \"<number>\",\n      \"bandName\": \"<string>\",\n      \"minValue\": \"<string>\",\n      \"maxValue\": \"<string>\"\n     },\n     {\n      \"bandNumber\": \"<number>\",\n      \"bandName\": \"<string>\",\n      \"minValue\": \"<string>\",\n      \"maxValue\": \"<string>\"\n     }\n    ],\n    \"bounds\": {\n     \"ne\": {\n      \"lat\": \"<number>\",\n      \"lng\": \"<number>\"\n     },\n     \"nw\": {\n      \"lat\": \"<number>\",\n      \"lng\": \"<number>\"\n     },\n     \"se\": {\n      \"lat\": \"<number>\",\n      \"lng\": \"<number>\"\n     },\n     \"sw\": {\n      \"lat\": \"<number>\",\n      \"lng\": \"<number>\"\n     }\n    },\n    \"outline\": {\n     \"type\": \"<string>\",\n     \"geometry\": {\n      \"type\": \"<string>\",\n      \"coordinates\": [\n       [\n        [\n         \"<number>\",\n         \"<number>\"\n        ],\n        [\n         \"<number>\",\n         \"<number>\"\n        ],\n        [\n         \"<number>\",\n         \"<number>\"\n        ]\n       ]\n      ]\n     },\n     \"properties\": \"<object>\"\n    },\n    \"minZoom\": \"<number>\",\n    \"maxZoom\": \"<number>\"\n   },\n   \"maptiles\": {\n    \"baseURL\": \"<string>\",\n    \"cdnToken\": \"<string>\",\n    \"bounds\": {\n     \"ne\": {\n      \"lat\": \"<number>\",\n      \"lng\": \"<number>\"\n     },\n     \"nw\": {\n      \"lat\": \"<number>\",\n      \"lng\": \"<number>\"\n     },\n     \"se\": {\n      \"lat\": \"<number>\",\n      \"lng\": \"<number>\"\n     },\n     \"sw\": {\n      \"lat\": \"<number>\",\n      \"lng\": \"<number>\"\n     }\n    },\n    \"minZoom\": \"<number>\",\n    \"maxZoom\": \"<number>\"\n   },\n   \"published\": \"<boolean>\",\n   \"publishedAt\": \"<number>\",\n   \"archived\": \"<boolean>\",\n   \"archivedAt\": \"<number>\",\n   \"metaData\": {\n    \"userRole\": {}\n   },\n   \"fileUploadCreds\": {\n    \"url\": \"<string>\",\n    \"method\": \"<string>\",\n    \"headers\": [\n     {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\"\n     },\n     {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\"\n     }\n    ],\n    \"bodyParams\": [\n     {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\"\n     },\n     {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\"\n     }\n    ]\n   }\n  }\n }\n}"
+										}
+									]
+								},
+								{
+									"name": "Create a vector for File Upload",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													"pm.environment.set(\"vectorName\",\"vectorName\"+Math.floor((Math.random() * 10000000000) + 1));\r",
+													"//types = data.vectorType;\r",
+													"types = \"geojson\";\r",
+													"pm.environment.set(\"vectorType\", types);"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"pm.test(\"Response body status is : 'success'\", function () {\r",
+													"    pm.expect(pm.response.json().status).to.eql(\"success\");\r",
+													"});\r",
+													"pm.test(\"Response Body message is 'Vector Created'\", function () {\r",
+													"    pm.expect(pm.response.json().message).to.eql(\"Vector Created\");\r",
+													"});\r",
+													"pm.test(\"Content-Type is present\", function () {\r",
+													"    pm.response.to.have.header(\"Content-Type\")  ;\r",
+													"});\r",
+													"pm.test(\"Status code name has string\", function () {\r",
+													"    pm.response.to.have.status(\"OK\");\r",
+													"});\r",
+													"pm.test(\"Response body vector name is equal to : '\"+pm.environment.get(\"vectorName\")+\"'\", function () {\r",
+													"    pm.expect(pm.response.json().data.vector.name).to.eql(pm.environment.get(\"vectorName\"));\r",
+													"});\r",
+													"pm.test(\"Response body should have organisation uuid as expected.\", function () {\r",
+													"    pm.expect(pm.response.json().data.vector.refUuid.organisationUuid).to.eql(pm.environment.get(\"orgUuid\"));\r",
+													"});\r",
+													"pm.test(\"Response body should have site uuid as expected.\", function () {\r",
+													"    pm.expect(pm.response.json().data.vector.refUuid.siteUuid).to.eql(pm.environment.get(\"siteUuid\"));\r",
+													"});\r",
+													"pm.test(\"Response body should have survey uuid as expected.\", function () {\r",
+													"    pm.expect(pm.response.json().data.vector.refUuid.surveyUuid).to.eql(pm.environment.get(\"surveyUuid\"));\r",
+													"});\r",
+													"if(pm.expect(pm.response.json().status).to.eql(\"success\")){\r",
+													"pm.environment.set(\"vectorUuid\", pm.response.json().data.vector.uuid);\r",
+													"}\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n \"name\": \"{{vectorName}}\",\n \"type\": \"{{vectorType}}\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/organisations/:organisationUuid/sites/:siteUuid/surveys/:surveyUuid/vectors",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"organisations",
+												":organisationUuid",
+												"sites",
+												":siteUuid",
+												"surveys",
+												":surveyUuid",
+												"vectors"
+											],
+											"variable": [
+												{
+													"key": "organisationUuid",
+													"value": "{{orgUuid}}",
+													"type": "string"
+												},
+												{
+													"key": "siteUuid",
+													"value": "{{siteUuid}}",
+													"type": "string"
+												},
+												{
+													"key": "surveyUuid",
+													"value": "{{surveyUuid}}",
+													"type": "string"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "When the create raster call fails internally",
+											"originalRequest": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"name\": \"<string>\",\n    \"rasterType\": \"<string>\"\n}"
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/v2/survey/:surveyUuid/raster",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v2",
+														"survey",
+														":surveyUuid",
+														"raster"
+													],
+													"variable": [
+														{
+															"key": "surveyUuid"
+														}
+													]
+												}
+											},
+											"status": "Internal Server Error",
+											"code": 500,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										},
+										{
+											"name": "Successful only when a user with sufficient permissions calls the API",
+											"originalRequest": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"name\": \"<string>\",\n    \"rasterType\": \"<string>\"\n}"
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/v2/survey/:surveyUuid/raster",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v2",
+														"survey",
+														":surveyUuid",
+														"raster"
+													],
+													"variable": [
+														{
+															"key": "surveyUuid"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n \"status\": \"<string>\",\n \"message\": \"<string>\",\n \"data\": {\n  \"raster\": {\n   \"name\": \"<string>\",\n   \"permalink\": \"<string>\",\n   \"uuid\": \"<string>\",\n   \"rasterType\": \"<string>\",\n   \"geotiff\": {\n    \"uuid\": \"<string>\",\n    \"downloadURL\": \"<string>\",\n    \"cdnToken\": \"<string>\",\n    \"size\": \"<number>\",\n    \"bandsCount\": \"<number>\",\n    \"bandsInfo\": [\n     {\n      \"bandNumber\": \"<number>\",\n      \"bandName\": \"<string>\",\n      \"minValue\": \"<string>\",\n      \"maxValue\": \"<string>\"\n     },\n     {\n      \"bandNumber\": \"<number>\",\n      \"bandName\": \"<string>\",\n      \"minValue\": \"<string>\",\n      \"maxValue\": \"<string>\"\n     }\n    ],\n    \"bounds\": {\n     \"ne\": {\n      \"lat\": \"<number>\",\n      \"lng\": \"<number>\"\n     },\n     \"nw\": {\n      \"lat\": \"<number>\",\n      \"lng\": \"<number>\"\n     },\n     \"se\": {\n      \"lat\": \"<number>\",\n      \"lng\": \"<number>\"\n     },\n     \"sw\": {\n      \"lat\": \"<number>\",\n      \"lng\": \"<number>\"\n     }\n    },\n    \"outline\": {\n     \"type\": \"<string>\",\n     \"geometry\": {\n      \"type\": \"<string>\",\n      \"coordinates\": [\n       [\n        [\n         \"<number>\",\n         \"<number>\"\n        ],\n        [\n         \"<number>\",\n         \"<number>\"\n        ],\n        [\n         \"<number>\",\n         \"<number>\"\n        ]\n       ]\n      ]\n     },\n     \"properties\": \"<object>\"\n    }\n   },\n   \"cogeotiff\": {\n    \"uuid\": \"<string>\",\n    \"downloadURL\": \"<string>\",\n    \"cdnToken\": \"<string>\",\n    \"size\": \"<number>\",\n    \"bandsCount\": \"<number>\",\n    \"bandsInfo\": [\n     {\n      \"bandNumber\": \"<number>\",\n      \"bandName\": \"<string>\",\n      \"minValue\": \"<string>\",\n      \"maxValue\": \"<string>\"\n     },\n     {\n      \"bandNumber\": \"<number>\",\n      \"bandName\": \"<string>\",\n      \"minValue\": \"<string>\",\n      \"maxValue\": \"<string>\"\n     }\n    ],\n    \"bounds\": {\n     \"ne\": {\n      \"lat\": \"<number>\",\n      \"lng\": \"<number>\"\n     },\n     \"nw\": {\n      \"lat\": \"<number>\",\n      \"lng\": \"<number>\"\n     },\n     \"se\": {\n      \"lat\": \"<number>\",\n      \"lng\": \"<number>\"\n     },\n     \"sw\": {\n      \"lat\": \"<number>\",\n      \"lng\": \"<number>\"\n     }\n    },\n    \"outline\": {\n     \"type\": \"<string>\",\n     \"geometry\": {\n      \"type\": \"<string>\",\n      \"coordinates\": [\n       [\n        [\n         \"<number>\",\n         \"<number>\"\n        ],\n        [\n         \"<number>\",\n         \"<number>\"\n        ],\n        [\n         \"<number>\",\n         \"<number>\"\n        ]\n       ]\n      ]\n     },\n     \"properties\": \"<object>\"\n    },\n    \"minZoom\": \"<number>\",\n    \"maxZoom\": \"<number>\"\n   },\n   \"maptiles\": {\n    \"baseURL\": \"<string>\",\n    \"cdnToken\": \"<string>\",\n    \"bounds\": {\n     \"ne\": {\n      \"lat\": \"<number>\",\n      \"lng\": \"<number>\"\n     },\n     \"nw\": {\n      \"lat\": \"<number>\",\n      \"lng\": \"<number>\"\n     },\n     \"se\": {\n      \"lat\": \"<number>\",\n      \"lng\": \"<number>\"\n     },\n     \"sw\": {\n      \"lat\": \"<number>\",\n      \"lng\": \"<number>\"\n     }\n    },\n    \"minZoom\": \"<number>\",\n    \"maxZoom\": \"<number>\"\n   },\n   \"published\": \"<boolean>\",\n   \"publishedAt\": \"<number>\",\n   \"archived\": \"<boolean>\",\n   \"archivedAt\": \"<number>\",\n   \"metaData\": {\n    \"userRole\": {}\n   },\n   \"fileUploadCreds\": {\n    \"url\": \"<string>\",\n    \"method\": \"<string>\",\n    \"headers\": [\n     {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\"\n     },\n     {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\"\n     }\n    ],\n    \"bodyParams\": [\n     {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\"\n     },\n     {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\"\n     }\n    ]\n   }\n  }\n }\n}"
+										},
+										{
+											"name": "User is not logged in",
+											"originalRequest": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"name\": \"<string>\",\n    \"rasterType\": \"<string>\"\n}"
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/v2/survey/:surveyUuid/raster",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v2",
+														"survey",
+														":surveyUuid",
+														"raster"
+													],
+													"variable": [
+														{
+															"key": "surveyUuid"
+														}
+													]
+												}
+											},
+											"status": "Unauthorized",
+											"code": 401,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "File Upload POST Raster",
+							"item": [
+								{
+									"name": "Generate the required file upload credentials for a particular element",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"if(pm.expect(pm.response.json().status).to.eql(\"success\")){\r",
+													"pm.environment.set(\"uploadFileName\", pm.response.json().data.fileUploadCredentials[0].fileName);\r",
+													"}\r",
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"pm.test(\"Response body has status as 'success'\", function () {\r",
+													"    var jsonData = pm.response.json();\r",
+													"    pm.expect(jsonData.status).to.eql(\"success\");\r",
+													"});\r",
+													"var successMessage = \"Generated File Upload Credentials\";\r",
+													"pm.test(\"Response Body message is '\"+successMessage+\"'\", function () {\r",
+													"    pm.expect(pm.response.json().message).to.eql(successMessage);\r",
+													"});\r",
+													"pm.test(\"Content-Type is present\", function () {\r",
+													"    pm.response.to.have.header(\"Content-Type\")  ;\r",
+													"});\r",
+													"pm.test(\"Status code name has string\", function () {\r",
+													"    pm.response.to.have.status(\"OK\");\r",
+													"});\r",
+													"\r",
+													"var schema ={\r",
+													"  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r",
+													"  \"type\": \"object\",\r",
+													"  \"properties\": {\r",
+													"      \"status\": {\r",
+													"        \"type\": \"string\",\r",
+													"        \"enum\":[\r",
+													"                \"success\",\r",
+													"                \"failure\",\r",
+													"                \"queued\",\r",
+													"                \"pending\",\r",
+													"                \"forbidden\"\r",
+													"        ]\r",
+													"    },\r",
+													"    \"message\": {\r",
+													"      \"type\": \"string\"\r",
+													"    },\r",
+													"    \"data\": {\r",
+													"      \"type\": \"object\",\r",
+													"      \"properties\": {\r",
+													"        \"fileUploadCredentials\": {\r",
+													"          \"type\": \"array\",\r",
+													"          \"items\": [\r",
+													"            {\r",
+													"              \"type\": \"object\",\r",
+													"              \"properties\": {\r",
+													"                \"fileName\": {\r",
+													"                  \"type\": \"string\"\r",
+													"                },\r",
+													"                \"httpHeaders\": {\r",
+													"                  \"type\": \"array\",\r",
+													"                  \"items\": [\r",
+													"                    {\r",
+													"                      \"type\": \"object\",\r",
+													"                      \"properties\": {\r",
+													"                        \"x-ms-blob-type\": {\r",
+													"                          \"type\": \"string\"\r",
+													"                        }\r",
+													"                      },\r",
+													"                      \"required\": [\r",
+													"                        \"x-ms-blob-type\"\r",
+													"                      ]\r",
+													"                    }\r",
+													"                  ]\r",
+													"                },\r",
+													"                \"method\": {\r",
+													"                  \"type\": \"string\"\r",
+													"                },\r",
+													"                \"url\": {\r",
+													"                  \"type\": \"string\"\r",
+													"                }\r",
+													"              },\r",
+													"              \"required\": [\r",
+													"                \"fileName\",\r",
+													"                \"httpHeaders\",\r",
+													"                \"method\",\r",
+													"                \"url\"\r",
+													"              ]\r",
+													"            }\r",
+													"          ]\r",
+													"        }\r",
+													"      },\r",
+													"      \"required\": [\r",
+													"        \"fileUploadCredentials\"\r",
+													"      ]\r",
+													"    }\r",
+													"  },\r",
+													"  \"required\": [\r",
+													"    \"data\",\r",
+													"    \"status\",\r",
+													"    \"message\"\r",
+													"  ],\r",
+													"  \"additionalProperties\":false\r",
+													"};\r",
+													"\r",
+													"pm.test('Schema is valid', function() {\r",
+													"  pm.expect(tv4.validate(pm.response.json(), schema)).to.be.true;\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													"pm.environment.set(\"fileUploadName\",\"fileUploadName_\"+Math.floor((Math.random() * 10000000000) + 1));\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"files\": [\n    {\n      \"name\": \"{{fileUploadName}}\",\n      \"sizeInBytes\": 2,\n      \"type\": \"geotiff\"\n    }\n  ]\n}"
+										},
+										"url": {
+											"raw": "{{baseUrlFileUpload}}/organisations/{{orgUuid}}/sites/{{siteUuid}}/surveys/{{surveyUuid}}/elements/raster/{{rasterUuid}}/file-upload-credentials",
+											"host": [
+												"{{baseUrlFileUpload}}"
+											],
+											"path": [
+												"organisations",
+												"{{orgUuid}}",
+												"sites",
+												"{{siteUuid}}",
+												"surveys",
+												"{{surveyUuid}}",
+												"elements",
+												"raster",
+												"{{rasterUuid}}",
+												"file-upload-credentials"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Post file upload - create duplicate record",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});\r",
+													"var errorMessage = \"Delete file before attempting upload again\";\r",
+													"pm.test(\"response gave file error message as : '\"+errorMessage+\"'\", function() {\r",
+													"    pm.expect(pm.response.json().fileErrors[0].message).to.eql(errorMessage);\r",
+													"});\r",
+													"pm.test(\"response have file name as : '\"+pm.environment.get(\"uploadFileName\")+\"'\", function() {\r",
+													"    pm.expect(pm.response.json().fileErrors[0].name).to.eql(pm.environment.get(\"uploadFileName\"));\r",
+													"});\r",
+													"pm.test(\"Content-Type is present\", function () {\r",
+													"    pm.response.to.have.header(\"Content-Type\");\r",
+													"});\r",
+													"pm.test(\"Status code name has string\", function () {\r",
+													"    pm.response.to.have.status(\"Bad Request\");\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"files\": [\n    {\n      \"name\": \"{{fileUploadName}}\",\n      \"sizeInBytes\": 0,\n      \"type\": \"geotiff\"\n    }\n  ]\n}"
+										},
+										"url": {
+											"raw": "{{baseUrlFileUpload}}/organisations/:organisationUuid/sites/:siteUuid/surveys/:surveyUuid/elements/:elementType/:elementUuid/file-upload-credentials",
+											"host": [
+												"{{baseUrlFileUpload}}"
+											],
+											"path": [
+												"organisations",
+												":organisationUuid",
+												"sites",
+												":siteUuid",
+												"surveys",
+												":surveyUuid",
+												"elements",
+												":elementType",
+												":elementUuid",
+												"file-upload-credentials"
+											],
+											"variable": [
+												{
+													"key": "organisationUuid",
+													"value": "{{orgUuid}}",
+													"type": "string"
+												},
+												{
+													"key": "siteUuid",
+													"value": "{{siteUuid}}",
+													"type": "string"
+												},
+												{
+													"key": "surveyUuid",
+													"value": "{{surveyUuid}}",
+													"type": "string"
+												},
+												{
+													"key": "elementType",
+													"value": "raster",
+													"type": "string"
+												},
+												{
+													"key": "elementUuid",
+													"value": "{{rasterUuid}}",
+													"type": "string"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Post file upload - wrong orgUuid",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 404\", function () {\r",
+													"    pm.response.to.have.status(404);\r",
+													"});\r",
+													"pm.test(\"Response body status is : 'failure'\", function () {\r",
+													"    pm.expect(pm.response.json().status).to.eql(\"failure\");\r",
+													"});\r",
+													"var errorMessage = \"Resource Not Found\";\r",
+													"pm.test(\"Response body has message as : '\"+errorMessage+\"'\", function () {\r",
+													"    pm.expect(pm.response.json().message).to.eql(errorMessage);\r",
+													"});\r",
+													"pm.test(\"Content-Type is present\", function () {\r",
+													"    pm.response.to.have.header(\"Content-Type\");\r",
+													"});\r",
+													"pm.test(\"Status code name has string\", function () {\r",
+													"    pm.response.to.have.status(\"Not Found\");\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"files\": [\n    {\n      \"name\": \"{{fileUploadName}}\",\n      \"sizeInBytes\": 0,\n      \"type\": \"geotiff\"\n    }\n  ]\n}"
+										},
+										"url": {
+											"raw": "{{baseUrlFileUpload}}/organisations/:organisationUuid/sites/:siteUuid/surveys/:surveyUuid/elements/:elementType/:elementUuid/file-upload-credentials",
+											"host": [
+												"{{baseUrlFileUpload}}"
+											],
+											"path": [
+												"organisations",
+												":organisationUuid",
+												"sites",
+												":siteUuid",
+												"surveys",
+												":surveyUuid",
+												"elements",
+												":elementType",
+												":elementUuid",
+												"file-upload-credentials"
+											],
+											"variable": [
+												{
+													"key": "organisationUuid",
+													"type": "string",
+													"value": "sdas"
+												},
+												{
+													"key": "siteUuid",
+													"type": "string",
+													"value": "{{siteUuid}}"
+												},
+												{
+													"key": "surveyUuid",
+													"type": "string",
+													"value": "{{surveyUuid}}"
+												},
+												{
+													"key": "elementType",
+													"type": "string",
+													"value": "raster"
+												},
+												{
+													"key": "elementUuid",
+													"type": "string",
+													"value": "{{rasterUuid}}"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Post file upload - wrong siteUuid",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 404\", function () {\r",
+													"    pm.response.to.have.status(404);\r",
+													"});\r",
+													"pm.test(\"Response body status is : 'failure'\", function () {\r",
+													"    pm.expect(pm.response.json().status).to.eql(\"failure\");\r",
+													"});\r",
+													"var errorMessage = \"Resource Not Found\";\r",
+													"pm.test(\"Response body has message as : '\"+errorMessage+\"'\", function () {\r",
+													"    pm.expect(pm.response.json().message).to.eql(errorMessage);\r",
+													"});\r",
+													"pm.test(\"Content-Type is present\", function () {\r",
+													"    pm.response.to.have.header(\"Content-Type\");\r",
+													"});\r",
+													"pm.test(\"Status code name has string\", function () {\r",
+													"    pm.response.to.have.status(\"Not Found\");\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"files\": [\n    {\n      \"name\": \"{{fileUploadName}}\",\n      \"sizeInBytes\": 0,\n      \"type\": \"geotiff\"\n    }\n  ]\n}"
+										},
+										"url": {
+											"raw": "{{baseUrlFileUpload}}/organisations/:organisationUuid/sites/:siteUuid/surveys/:surveyUuid/elements/:elementType/:elementUuid/file-upload-credentials",
+											"host": [
+												"{{baseUrlFileUpload}}"
+											],
+											"path": [
+												"organisations",
+												":organisationUuid",
+												"sites",
+												":siteUuid",
+												"surveys",
+												":surveyUuid",
+												"elements",
+												":elementType",
+												":elementUuid",
+												"file-upload-credentials"
+											],
+											"variable": [
+												{
+													"key": "organisationUuid",
+													"type": "string",
+													"value": "{{orgUuid}}"
+												},
+												{
+													"key": "siteUuid",
+													"type": "string",
+													"value": "jsdfkshdksahn,s"
+												},
+												{
+													"key": "surveyUuid",
+													"type": "string",
+													"value": "{{surveyUuid}}"
+												},
+												{
+													"key": "elementType",
+													"type": "string",
+													"value": "raster"
+												},
+												{
+													"key": "elementUuid",
+													"type": "string",
+													"value": "{{rasterUuid}}"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Post file upload - wrong surveyUuid",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 404\", function () {\r",
+													"    pm.response.to.have.status(404);\r",
+													"});\r",
+													"pm.test(\"Response body status is : 'failure'\", function () {\r",
+													"    pm.expect(pm.response.json().status).to.eql(\"failure\");\r",
+													"});\r",
+													"var errorMessage = \"Resource Not Found\";\r",
+													"pm.test(\"Response body has message as : '\"+errorMessage+\"'\", function () {\r",
+													"    pm.expect(pm.response.json().message).to.eql(errorMessage);\r",
+													"});\r",
+													"pm.test(\"Content-Type is present\", function () {\r",
+													"    pm.response.to.have.header(\"Content-Type\");\r",
+													"});\r",
+													"pm.test(\"Status code name has string\", function () {\r",
+													"    pm.response.to.have.status(\"Not Found\");\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"files\": [\n    {\n      \"name\": \"{{fileUploadName}}\",\n      \"sizeInBytes\": 0,\n      \"type\": \"geotiff\"\n    }\n  ]\n}"
+										},
+										"url": {
+											"raw": "{{baseUrlFileUpload}}/organisations/:organisationUuid/sites/:siteUuid/surveys/:surveyUuid/elements/:elementType/:elementUuid/file-upload-credentials",
+											"host": [
+												"{{baseUrlFileUpload}}"
+											],
+											"path": [
+												"organisations",
+												":organisationUuid",
+												"sites",
+												":siteUuid",
+												"surveys",
+												":surveyUuid",
+												"elements",
+												":elementType",
+												":elementUuid",
+												"file-upload-credentials"
+											],
+											"variable": [
+												{
+													"key": "organisationUuid",
+													"type": "string",
+													"value": "{{orgUuid}}"
+												},
+												{
+													"key": "siteUuid",
+													"type": "string",
+													"value": "{{siteUuid}}"
+												},
+												{
+													"key": "surveyUuid",
+													"type": "string",
+													"value": "ailsdjiasd"
+												},
+												{
+													"key": "elementType",
+													"type": "string",
+													"value": "raster"
+												},
+												{
+													"key": "elementUuid",
+													"type": "string",
+													"value": "{{rasterUuid}}"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Post file upload - wrong elementUuid",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 404\", function () {\r",
+													"    pm.response.to.have.status(404);\r",
+													"});\r",
+													"pm.test(\"Response body status is : 'failure'\", function () {\r",
+													"    pm.expect(pm.response.json().status).to.eql(\"failure\");\r",
+													"});\r",
+													"var errorMessage = \"Resource Not Found\";\r",
+													"pm.test(\"Response body has message as : '\"+errorMessage+\"'\", function () {\r",
+													"    pm.expect(pm.response.json().message).to.eql(errorMessage);\r",
+													"});\r",
+													"pm.test(\"Content-Type is present\", function () {\r",
+													"    pm.response.to.have.header(\"Content-Type\");\r",
+													"});\r",
+													"pm.test(\"Status code name has string\", function () {\r",
+													"    pm.response.to.have.status(\"Not Found\");\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"files\": [\n    {\n      \"name\": \"{{fileUploadName}}\",\n      \"sizeInBytes\": 0,\n      \"type\": \"geotiff\"\n    }\n  ]\n}"
+										},
+										"url": {
+											"raw": "{{baseUrlFileUpload}}/organisations/:organisationUuid/sites/:siteUuid/surveys/:surveyUuid/elements/:elementType/:elementUuid/file-upload-credentials",
+											"host": [
+												"{{baseUrlFileUpload}}"
+											],
+											"path": [
+												"organisations",
+												":organisationUuid",
+												"sites",
+												":siteUuid",
+												"surveys",
+												":surveyUuid",
+												"elements",
+												":elementType",
+												":elementUuid",
+												"file-upload-credentials"
+											],
+											"variable": [
+												{
+													"key": "organisationUuid",
+													"type": "string",
+													"value": "{{orgUuid}}"
+												},
+												{
+													"key": "siteUuid",
+													"type": "string",
+													"value": "{{siteUuid}}"
+												},
+												{
+													"key": "surveyUuid",
+													"type": "string",
+													"value": "{{surveyUuid}}"
+												},
+												{
+													"key": "elementType",
+													"type": "string",
+													"value": "raster"
+												},
+												{
+													"key": "elementUuid",
+													"type": "string",
+													"value": "###"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "creating raster for next request",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													"pm.environment.set(\"rasterName\",\"rasterName\"+Math.floor((Math.random() * 10000000000) + 1));\r",
+													"//types = data.rasterType;\r",
+													"types = \"dtm\";\r",
+													"pm.environment.set(\"rasterType\", types);"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"pm.test(\"Response body status is : 'success'\", function () {\r",
+													"    pm.expect(pm.response.json().status).to.eql(\"success\");\r",
+													"});\r",
+													"pm.test(\"Response Body message is 'Raster Created'\", function () {\r",
+													"    pm.expect(pm.response.json().message).to.eql(\"Raster Created\");\r",
+													"});\r",
+													"pm.test(\"Content-Type is present\", function () {\r",
+													"    pm.response.to.have.header(\"Content-Type\")  ;\r",
+													"});\r",
+													"pm.test(\"Status code name has string\", function () {\r",
+													"    pm.response.to.have.status(\"OK\");\r",
+													"});\r",
+													"pm.test(\"Response body raster name is equal to : '\"+pm.environment.get(\"rasterName\")+\"'\", function () {\r",
+													"    pm.expect(pm.response.json().data.raster.name).to.eql(pm.environment.get(\"rasterName\"));\r",
+													"});\r",
+													"pm.test(\"Response body should have organisation uuid as expected.\", function () {\r",
+													"    pm.expect(pm.response.json().data.raster.refUuid.organisationUuid).to.eql(pm.environment.get(\"orgUuid\"));\r",
+													"});\r",
+													"pm.test(\"Response body should have site uuid as expected.\", function () {\r",
+													"    pm.expect(pm.response.json().data.raster.refUuid.siteUuid).to.eql(pm.environment.get(\"siteUuid\"));\r",
+													"});\r",
+													"pm.test(\"Response body should have survey uuid as expected.\", function () {\r",
+													"    pm.expect(pm.response.json().data.raster.refUuid.surveyUuid).to.eql(pm.environment.get(\"surveyUuid\"));\r",
+													"});\r",
+													"pm.environment.set(\"rasterUuid\", pm.response.json().data.raster.uuid);\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n \"name\": \"{{rasterName}}\",\n \"type\":\"{{rasterType}}\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/organisations/:organisationUuid/sites/:siteUuid/surveys/:surveyUuid/rasters",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"organisations",
+												":organisationUuid",
+												"sites",
+												":siteUuid",
+												"surveys",
+												":surveyUuid",
+												"rasters"
+											],
+											"variable": [
+												{
+													"key": "organisationUuid",
+													"value": "{{orgUuid}}",
+													"type": "string"
+												},
+												{
+													"key": "siteUuid",
+													"value": "{{siteUuid}}",
+													"type": "string"
+												},
+												{
+													"key": "surveyUuid",
+													"value": "{{surveyUuid}}",
+													"type": "string"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "User is not logged in",
+											"originalRequest": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"name\": \"<string>\",\n    \"rasterType\": \"<string>\"\n}"
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/v2/survey/:surveyUuid/raster",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v2",
+														"survey",
+														":surveyUuid",
+														"raster"
+													],
+													"variable": [
+														{
+															"key": "surveyUuid"
+														}
+													]
+												}
+											},
+											"status": "Unauthorized",
+											"code": 401,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										},
+										{
+											"name": "Successful only when a user with sufficient permissions calls the API",
+											"originalRequest": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"name\": \"<string>\",\n    \"rasterType\": \"<string>\"\n}"
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/v2/survey/:surveyUuid/raster",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v2",
+														"survey",
+														":surveyUuid",
+														"raster"
+													],
+													"variable": [
+														{
+															"key": "surveyUuid"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n \"status\": \"<string>\",\n \"message\": \"<string>\",\n \"data\": {\n  \"raster\": {\n   \"name\": \"<string>\",\n   \"permalink\": \"<string>\",\n   \"uuid\": \"<string>\",\n   \"rasterType\": \"<string>\",\n   \"geotiff\": {\n    \"uuid\": \"<string>\",\n    \"downloadURL\": \"<string>\",\n    \"cdnToken\": \"<string>\",\n    \"size\": \"<number>\",\n    \"bandsCount\": \"<number>\",\n    \"bandsInfo\": [\n     {\n      \"bandNumber\": \"<number>\",\n      \"bandName\": \"<string>\",\n      \"minValue\": \"<string>\",\n      \"maxValue\": \"<string>\"\n     },\n     {\n      \"bandNumber\": \"<number>\",\n      \"bandName\": \"<string>\",\n      \"minValue\": \"<string>\",\n      \"maxValue\": \"<string>\"\n     }\n    ],\n    \"bounds\": {\n     \"ne\": {\n      \"lat\": \"<number>\",\n      \"lng\": \"<number>\"\n     },\n     \"nw\": {\n      \"lat\": \"<number>\",\n      \"lng\": \"<number>\"\n     },\n     \"se\": {\n      \"lat\": \"<number>\",\n      \"lng\": \"<number>\"\n     },\n     \"sw\": {\n      \"lat\": \"<number>\",\n      \"lng\": \"<number>\"\n     }\n    },\n    \"outline\": {\n     \"type\": \"<string>\",\n     \"geometry\": {\n      \"type\": \"<string>\",\n      \"coordinates\": [\n       [\n        [\n         \"<number>\",\n         \"<number>\"\n        ],\n        [\n         \"<number>\",\n         \"<number>\"\n        ],\n        [\n         \"<number>\",\n         \"<number>\"\n        ]\n       ]\n      ]\n     },\n     \"properties\": \"<object>\"\n    }\n   },\n   \"cogeotiff\": {\n    \"uuid\": \"<string>\",\n    \"downloadURL\": \"<string>\",\n    \"cdnToken\": \"<string>\",\n    \"size\": \"<number>\",\n    \"bandsCount\": \"<number>\",\n    \"bandsInfo\": [\n     {\n      \"bandNumber\": \"<number>\",\n      \"bandName\": \"<string>\",\n      \"minValue\": \"<string>\",\n      \"maxValue\": \"<string>\"\n     },\n     {\n      \"bandNumber\": \"<number>\",\n      \"bandName\": \"<string>\",\n      \"minValue\": \"<string>\",\n      \"maxValue\": \"<string>\"\n     }\n    ],\n    \"bounds\": {\n     \"ne\": {\n      \"lat\": \"<number>\",\n      \"lng\": \"<number>\"\n     },\n     \"nw\": {\n      \"lat\": \"<number>\",\n      \"lng\": \"<number>\"\n     },\n     \"se\": {\n      \"lat\": \"<number>\",\n      \"lng\": \"<number>\"\n     },\n     \"sw\": {\n      \"lat\": \"<number>\",\n      \"lng\": \"<number>\"\n     }\n    },\n    \"outline\": {\n     \"type\": \"<string>\",\n     \"geometry\": {\n      \"type\": \"<string>\",\n      \"coordinates\": [\n       [\n        [\n         \"<number>\",\n         \"<number>\"\n        ],\n        [\n         \"<number>\",\n         \"<number>\"\n        ],\n        [\n         \"<number>\",\n         \"<number>\"\n        ]\n       ]\n      ]\n     },\n     \"properties\": \"<object>\"\n    },\n    \"minZoom\": \"<number>\",\n    \"maxZoom\": \"<number>\"\n   },\n   \"maptiles\": {\n    \"baseURL\": \"<string>\",\n    \"cdnToken\": \"<string>\",\n    \"bounds\": {\n     \"ne\": {\n      \"lat\": \"<number>\",\n      \"lng\": \"<number>\"\n     },\n     \"nw\": {\n      \"lat\": \"<number>\",\n      \"lng\": \"<number>\"\n     },\n     \"se\": {\n      \"lat\": \"<number>\",\n      \"lng\": \"<number>\"\n     },\n     \"sw\": {\n      \"lat\": \"<number>\",\n      \"lng\": \"<number>\"\n     }\n    },\n    \"minZoom\": \"<number>\",\n    \"maxZoom\": \"<number>\"\n   },\n   \"published\": \"<boolean>\",\n   \"publishedAt\": \"<number>\",\n   \"archived\": \"<boolean>\",\n   \"archivedAt\": \"<number>\",\n   \"metaData\": {\n    \"userRole\": {}\n   },\n   \"fileUploadCreds\": {\n    \"url\": \"<string>\",\n    \"method\": \"<string>\",\n    \"headers\": [\n     {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\"\n     },\n     {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\"\n     }\n    ],\n    \"bodyParams\": [\n     {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\"\n     },\n     {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\"\n     }\n    ]\n   }\n  }\n }\n}"
+										},
+										{
+											"name": "When the create raster call fails internally",
+											"originalRequest": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"name\": \"<string>\",\n    \"rasterType\": \"<string>\"\n}"
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/v2/survey/:surveyUuid/raster",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v2",
+														"survey",
+														":surveyUuid",
+														"raster"
+													],
+													"variable": [
+														{
+															"key": "surveyUuid"
+														}
+													]
+												}
+											},
+											"status": "Internal Server Error",
+											"code": 500,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								},
+								{
+									"name": "Post file upload - More than 1024 char name",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});\r",
+													"pm.test(\"Response body status is 'failure'\", function () {\r",
+													"    var jsonData = pm.response.json();\r",
+													"    pm.expect(jsonData.status).to.eql(\"failure\");\r",
+													"});\r",
+													"pm.test(\"Response body message is 'Validation Error'\", function () {\r",
+													"    var jsonData = pm.response.json();\r",
+													"    pm.expect(jsonData.message).to.eql(\"Validation Error\");\r",
+													"});\r",
+													"pm.test(\"Content-Type is present\", function () {\r",
+													"    pm.response.to.have.header(\"Content-Type\")  ;\r",
+													"});\r",
+													"pm.test(\"Status code name has string\", function () {\r",
+													"    pm.response.to.have.status(\"Bad Request\");\r",
+													"});\r",
+													"pm.test(\"Response body validation error message is 'Ensure this field has no more than 100 characters.' \", function () {\r",
+													"    var jsonData = pm.response.json();\r",
+													"    pm.expect(jsonData.validation_errors.name[0][0]).to.eql(\"Ensure this field has no more than 1024 characters.\");\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"files\": [\n    {\n      \"name\": \"orgName_1882955391 - Deleasdasdadadadhauygfawdawdawdwadasdaiquhf4a564a6w4da64da6dw8aw6d4a684d6aw4da684d68a4da65d4aw65d4aw68d!@#&(*@!&$*!&^$*&@!^$*!^$*te2orgName_1882955391 - Deleasdasdadadadhauygfawdawdawdwadasdaiquhf4a564a6w4da64da6dw8aw6d4a684d6aw4da684d68a4da65d4aw65d4aw68d!@#&(*@!&$*!&^$*&@!^$*!^$*te2orgName_1882955391 - Deleasdasdadadadhauygfawdawdawdwadasdaiquhf4a564a6w4da64da6dw8aw6d4a684d6aw4da684d68a4da65d4aw65d4aw68d!@#&(*@!&$*!&^$*&@!^$*!^$*te2orgName_1882955391 - Deleasdasdadadadhauygfawdawdawdwadasdaiquhf4a564a6w4da64da6dw8aw6d4a684d6aw4da684d68a4da65d4aw65d4aw68d!@#&(*@!&$*!&^$*&@!^$*!^$*te2orgName_1882955391 - Deleasdasdadadadhauygfawdawdawdwadasdaiquhf4a564a6w4da64da6dw8aw6d4a684d6aw4da684d68a4da65d4aw65d4aw68d!@#&(*@!&$*!&^$*&@!^$*!^$*te2orgName_1882955391 - Deleasdasdadadadhauygfawdawdawdwadasdaiquhf4a564a6w4da64da6dw8aw6d4a684d6aw4da684d68a4da65d4aw65d4aw68d!@#&(*@!&$*!&^$*&@!^$*!^$*te2orgName_1882955391 - Deleasdasdadadadhauygfawdawdawdwadasdaiquhf4a564a6w4da64da6dw8aw6d4a684d6aw4da684d68a4\",\n      \"sizeInBytes\": 0,\n      \"type\": \"geotiff\"\n    }\n  ]\n}"
+										},
+										"url": {
+											"raw": "{{baseUrlFileUpload}}/organisations/:organisationUuid/sites/:siteUuid/surveys/:surveyUuid/elements/:elementType/:elementUuid/file-upload-credentials",
+											"host": [
+												"{{baseUrlFileUpload}}"
+											],
+											"path": [
+												"organisations",
+												":organisationUuid",
+												"sites",
+												":siteUuid",
+												"surveys",
+												":surveyUuid",
+												"elements",
+												":elementType",
+												":elementUuid",
+												"file-upload-credentials"
+											],
+											"variable": [
+												{
+													"key": "organisationUuid",
+													"type": "string",
+													"value": "{{orgUuid}}"
+												},
+												{
+													"key": "siteUuid",
+													"type": "string",
+													"value": "{{siteUuid}}"
+												},
+												{
+													"key": "surveyUuid",
+													"type": "string",
+													"value": "{{surveyUuid}}"
+												},
+												{
+													"key": "elementType",
+													"type": "string",
+													"value": "raster"
+												},
+												{
+													"key": "elementUuid",
+													"type": "string",
+													"value": "{{rasterUuid}}"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Post file upload - Without request body",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});\r",
+													"pm.test(\"Response body status is 'failure'\", function () {\r",
+													"    var jsonData = pm.response.json();\r",
+													"    pm.expect(jsonData.status).to.eql(\"failure\");\r",
+													"});\r",
+													"pm.test(\"Response body message is 'Validation Error'\", function () {\r",
+													"    var jsonData = pm.response.json();\r",
+													"    pm.expect(jsonData.message).to.eql(\"Validation Error\");\r",
+													"});\r",
+													"pm.test(\"Content-Type is present\", function () {\r",
+													"    pm.response.to.have.header(\"Content-Type\")  ;\r",
+													"});\r",
+													"pm.test(\"Status code name has string\", function () {\r",
+													"    pm.response.to.have.status(\"Bad Request\");\r",
+													"});\r",
+													"pm.test(\"Response body validation error message is 'Ensure this field has no more than 100 characters.' \", function () {\r",
+													"    var jsonData = pm.response.json();\r",
+													"    pm.expect(jsonData.validation_errors.name[0][0]).to.eql(\"This field is required.\");\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{}"
+										},
+										"url": {
+											"raw": "{{baseUrlFileUpload}}/organisations/:organisationUuid/sites/:siteUuid/surveys/:surveyUuid/elements/:elementType/:elementUuid/file-upload-credentials",
+											"host": [
+												"{{baseUrlFileUpload}}"
+											],
+											"path": [
+												"organisations",
+												":organisationUuid",
+												"sites",
+												":siteUuid",
+												"surveys",
+												":surveyUuid",
+												"elements",
+												":elementType",
+												":elementUuid",
+												"file-upload-credentials"
+											],
+											"variable": [
+												{
+													"key": "organisationUuid",
+													"value": "{{orgUuid}}",
+													"type": "string"
+												},
+												{
+													"key": "siteUuid",
+													"value": "{{siteUuid}}",
+													"type": "string"
+												},
+												{
+													"key": "surveyUuid",
+													"value": "{{surveyUuid}}",
+													"type": "string"
+												},
+												{
+													"key": "elementType",
+													"value": "raster",
+													"type": "string"
+												},
+												{
+													"key": "elementUuid",
+													"value": "{{rasterUuid}}",
+													"type": "string"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Post file upload - Empty name filed in body",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});\r",
+													"pm.test(\"Response body status is 'failure'\", function () {\r",
+													"    var jsonData = pm.response.json();\r",
+													"    pm.expect(jsonData.status).to.eql(\"failure\");\r",
+													"});\r",
+													"pm.test(\"Response body message is 'Validation Error'\", function () {\r",
+													"    var jsonData = pm.response.json();\r",
+													"    pm.expect(jsonData.message).to.eql(\"Validation Error\");\r",
+													"});\r",
+													"pm.test(\"Content-Type is present\", function () {\r",
+													"    pm.response.to.have.header(\"Content-Type\")  ;\r",
+													"});\r",
+													"pm.test(\"Status code name has string\", function () {\r",
+													"    pm.response.to.have.status(\"Bad Request\");\r",
+													"});\r",
+													"pm.test(\"Response body validation error message is 'Ensure this field has no more than 100 characters.' \", function () {\r",
+													"    var jsonData = pm.response.json();\r",
+													"    pm.expect(jsonData.validation_errors.name[0][0]).to.eql(\"This field is required.\");\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"files\": [\r\n    {\r\n      \"name\": \"\",\r\n      \"sizeInBytes\": 2,\r\n      \"type\": \"geotiff\"\r\n    }\r\n  ]\r\n}"
+										},
+										"url": {
+											"raw": "{{baseUrlFileUpload}}/organisations/:organisationUuid/sites/:siteUuid/surveys/:surveyUuid/elements/:elementType/:elementUuid/file-upload-credentials",
+											"host": [
+												"{{baseUrlFileUpload}}"
+											],
+											"path": [
+												"organisations",
+												":organisationUuid",
+												"sites",
+												":siteUuid",
+												"surveys",
+												":surveyUuid",
+												"elements",
+												":elementType",
+												":elementUuid",
+												"file-upload-credentials"
+											],
+											"variable": [
+												{
+													"key": "organisationUuid",
+													"value": "{{orgUuid}}",
+													"type": "string"
+												},
+												{
+													"key": "siteUuid",
+													"value": "{{siteUuid}}",
+													"type": "string"
+												},
+												{
+													"key": "surveyUuid",
+													"value": "{{surveyUuid}}",
+													"type": "string"
+												},
+												{
+													"key": "elementType",
+													"value": "raster",
+													"type": "string"
+												},
+												{
+													"key": "elementUuid",
+													"value": "{{rasterUuid}}",
+													"type": "string"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Post file upload - Invalid request body json",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});\r",
+													"pm.test(\"Response body status is 'failure'\", function () {\r",
+													"    var jsonData = pm.response.json();\r",
+													"    pm.expect(jsonData.status).to.eql(\"failure\");\r",
+													"});\r",
+													"pm.test(\"Content-Type is present\", function () {\r",
+													"    pm.response.to.have.header(\"Content-Type\")  ;\r",
+													"});\r",
+													"pm.test(\"Status code name has string\", function () {\r",
+													"    pm.response.to.have.status(\"Bad Request\");\r",
+													"});\r",
+													"var errorMessage = \"Failed to decode JSON object\";\r",
+													"pm.test(\"Response body validation error message is '\"+errorMessage+\"' \", function () {\r",
+													"    pm.expect(pm.response.json().message).to.contain(errorMessage);\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"files\": [\r\n    {\r\n      \"name\": \"string\"\r\n      \"sizeInBytes\": 0,\r\n      \"type\": \"geotiff\"\r\n    }\r\n  ]\r\n}"
+										},
+										"url": {
+											"raw": "{{baseUrlFileUpload}}/organisations/:organisationUuid/sites/:siteUuid/surveys/:surveyUuid/elements/:elementType/:elementUuid/file-upload-credentials",
+											"host": [
+												"{{baseUrlFileUpload}}"
+											],
+											"path": [
+												"organisations",
+												":organisationUuid",
+												"sites",
+												":siteUuid",
+												"surveys",
+												":surveyUuid",
+												"elements",
+												":elementType",
+												":elementUuid",
+												"file-upload-credentials"
+											],
+											"variable": [
+												{
+													"key": "organisationUuid",
+													"value": "{{orgUuid}}",
+													"type": "string"
+												},
+												{
+													"key": "siteUuid",
+													"value": "{{siteUuid}}",
+													"type": "string"
+												},
+												{
+													"key": "surveyUuid",
+													"value": "{{surveyUuid}}",
+													"type": "string"
+												},
+												{
+													"key": "elementType",
+													"value": "raster",
+													"type": "string"
+												},
+												{
+													"key": "elementUuid",
+													"value": "{{rasterUuid}}",
+													"type": "string"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Post file upload - sending null values",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 400\", function () {\r",
+													"    pm.response.to.have.status(400);\r",
+													"});\r",
+													"pm.test(\"Response body status is 'failure'\", function () {\r",
+													"    var jsonData = pm.response.json();\r",
+													"    pm.expect(jsonData.status).to.eql(\"failure\");\r",
+													"});\r",
+													"pm.test(\"Response body message is 'Validation Error'\", function () {\r",
+													"    pm.expect(pm.response.json().message).to.eql(\"Validation Error\");\r",
+													"});\r",
+													"pm.test(\"Content-Type is present\", function () {\r",
+													"    pm.response.to.have.header(\"Content-Type\")  ;\r",
+													"});\r",
+													"pm.test(\"Status code name has string\", function () {\r",
+													"    pm.response.to.have.status(\"Bad Request\");\r",
+													"});\r",
+													"pm.test(\"Response body validation error message is 'This Field may not be null.' \", function () {\r",
+													"    var jsonData = pm.response.json();\r",
+													"    pm.expect(jsonData.validation_errors.name[0][0]).to.eql(\"This field may not be null.\");\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\r\n  \"files\": [\r\n    {\r\n      \"name\": null,\r\n      \"sizeInBytes\": null,\r\n      \"type\": null\r\n    }\r\n  ]\r\n}"
+										},
+										"url": {
+											"raw": "{{baseUrlFileUpload}}/organisations/:organisationUuid/sites/:siteUuid/surveys/:surveyUuid/elements/:elementType/:elementUuid/file-upload-credentials",
+											"host": [
+												"{{baseUrlFileUpload}}"
+											],
+											"path": [
+												"organisations",
+												":organisationUuid",
+												"sites",
+												":siteUuid",
+												"surveys",
+												":surveyUuid",
+												"elements",
+												":elementType",
+												":elementUuid",
+												"file-upload-credentials"
+											],
+											"variable": [
+												{
+													"key": "organisationUuid",
+													"value": "{{orgUuid}}",
+													"type": "string"
+												},
+												{
+													"key": "siteUuid",
+													"value": "{{siteUuid}}",
+													"type": "string"
+												},
+												{
+													"key": "surveyUuid",
+													"value": "{{surveyUuid}}",
+													"type": "string"
+												},
+												{
+													"key": "elementType",
+													"value": "raster",
+													"type": "string"
+												},
+												{
+													"key": "elementUuid",
+													"value": "{{rasterUuid}}",
+													"type": "string"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Createing raster for next request",
+									"event": [
+										{
+											"listen": "prerequest",
+											"script": {
+												"exec": [
+													"pm.environment.set(\"rasterName\",\"rasterName\"+Math.floor((Math.random() * 10000000000) + 1));\r",
+													"//types = data.rasterType;\r",
+													"types = \"dtm\";\r",
+													"pm.environment.set(\"rasterType\", types);"
+												],
+												"type": "text/javascript"
+											}
+										},
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"pm.test(\"Response body status is : 'success'\", function () {\r",
+													"    pm.expect(pm.response.json().status).to.eql(\"success\");\r",
+													"});\r",
+													"pm.test(\"Response Body message is 'Raster Created'\", function () {\r",
+													"    pm.expect(pm.response.json().message).to.eql(\"Raster Created\");\r",
+													"});\r",
+													"pm.test(\"Content-Type is present\", function () {\r",
+													"    pm.response.to.have.header(\"Content-Type\")  ;\r",
+													"});\r",
+													"pm.test(\"Status code name has string\", function () {\r",
+													"    pm.response.to.have.status(\"OK\");\r",
+													"});\r",
+													"pm.test(\"Response body raster name is equal to : '\"+pm.environment.get(\"rasterName\")+\"'\", function () {\r",
+													"    pm.expect(pm.response.json().data.raster.name).to.eql(pm.environment.get(\"rasterName\"));\r",
+													"});\r",
+													"pm.test(\"Response body should have organisation uuid as expected.\", function () {\r",
+													"    pm.expect(pm.response.json().data.raster.refUuid.organisationUuid).to.eql(pm.environment.get(\"orgUuid\"));\r",
+													"});\r",
+													"pm.test(\"Response body should have site uuid as expected.\", function () {\r",
+													"    pm.expect(pm.response.json().data.raster.refUuid.siteUuid).to.eql(pm.environment.get(\"siteUuid\"));\r",
+													"});\r",
+													"pm.test(\"Response body should have survey uuid as expected.\", function () {\r",
+													"    pm.expect(pm.response.json().data.raster.refUuid.surveyUuid).to.eql(pm.environment.get(\"surveyUuid\"));\r",
+													"});\r",
+													"pm.environment.set(\"rasterUuid\", pm.response.json().data.raster.uuid);\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n \"name\": \"{{rasterName}}\",\n \"type\":\"{{rasterType}}\"\n}"
+										},
+										"url": {
+											"raw": "{{baseUrl}}/organisations/:organisationUuid/sites/:siteUuid/surveys/:surveyUuid/rasters",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"organisations",
+												":organisationUuid",
+												"sites",
+												":siteUuid",
+												"surveys",
+												":surveyUuid",
+												"rasters"
+											],
+											"variable": [
+												{
+													"key": "organisationUuid",
+													"value": "{{orgUuid}}",
+													"type": "string"
+												},
+												{
+													"key": "siteUuid",
+													"value": "{{siteUuid}}",
+													"type": "string"
+												},
+												{
+													"key": "surveyUuid",
+													"value": "{{surveyUuid}}",
+													"type": "string"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "When the create raster call fails internally",
+											"originalRequest": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"name\": \"<string>\",\n    \"rasterType\": \"<string>\"\n}"
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/v2/survey/:surveyUuid/raster",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v2",
+														"survey",
+														":surveyUuid",
+														"raster"
+													],
+													"variable": [
+														{
+															"key": "surveyUuid"
+														}
+													]
+												}
+											},
+											"status": "Internal Server Error",
+											"code": 500,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										},
+										{
+											"name": "User is not logged in",
+											"originalRequest": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"name\": \"<string>\",\n    \"rasterType\": \"<string>\"\n}"
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/v2/survey/:surveyUuid/raster",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v2",
+														"survey",
+														":surveyUuid",
+														"raster"
+													],
+													"variable": [
+														{
+															"key": "surveyUuid"
+														}
+													]
+												}
+											},
+											"status": "Unauthorized",
+											"code": 401,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										},
+										{
+											"name": "Successful only when a user with sufficient permissions calls the API",
+											"originalRequest": {
+												"method": "POST",
+												"header": [],
+												"body": {
+													"mode": "raw",
+													"raw": "{\n    \"name\": \"<string>\",\n    \"rasterType\": \"<string>\"\n}"
+												},
+												"url": {
+													"raw": "{{baseUrl}}/api/v2/survey/:surveyUuid/raster",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v2",
+														"survey",
+														":surveyUuid",
+														"raster"
+													],
+													"variable": [
+														{
+															"key": "surveyUuid"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n \"status\": \"<string>\",\n \"message\": \"<string>\",\n \"data\": {\n  \"raster\": {\n   \"name\": \"<string>\",\n   \"permalink\": \"<string>\",\n   \"uuid\": \"<string>\",\n   \"rasterType\": \"<string>\",\n   \"geotiff\": {\n    \"uuid\": \"<string>\",\n    \"downloadURL\": \"<string>\",\n    \"cdnToken\": \"<string>\",\n    \"size\": \"<number>\",\n    \"bandsCount\": \"<number>\",\n    \"bandsInfo\": [\n     {\n      \"bandNumber\": \"<number>\",\n      \"bandName\": \"<string>\",\n      \"minValue\": \"<string>\",\n      \"maxValue\": \"<string>\"\n     },\n     {\n      \"bandNumber\": \"<number>\",\n      \"bandName\": \"<string>\",\n      \"minValue\": \"<string>\",\n      \"maxValue\": \"<string>\"\n     }\n    ],\n    \"bounds\": {\n     \"ne\": {\n      \"lat\": \"<number>\",\n      \"lng\": \"<number>\"\n     },\n     \"nw\": {\n      \"lat\": \"<number>\",\n      \"lng\": \"<number>\"\n     },\n     \"se\": {\n      \"lat\": \"<number>\",\n      \"lng\": \"<number>\"\n     },\n     \"sw\": {\n      \"lat\": \"<number>\",\n      \"lng\": \"<number>\"\n     }\n    },\n    \"outline\": {\n     \"type\": \"<string>\",\n     \"geometry\": {\n      \"type\": \"<string>\",\n      \"coordinates\": [\n       [\n        [\n         \"<number>\",\n         \"<number>\"\n        ],\n        [\n         \"<number>\",\n         \"<number>\"\n        ],\n        [\n         \"<number>\",\n         \"<number>\"\n        ]\n       ]\n      ]\n     },\n     \"properties\": \"<object>\"\n    }\n   },\n   \"cogeotiff\": {\n    \"uuid\": \"<string>\",\n    \"downloadURL\": \"<string>\",\n    \"cdnToken\": \"<string>\",\n    \"size\": \"<number>\",\n    \"bandsCount\": \"<number>\",\n    \"bandsInfo\": [\n     {\n      \"bandNumber\": \"<number>\",\n      \"bandName\": \"<string>\",\n      \"minValue\": \"<string>\",\n      \"maxValue\": \"<string>\"\n     },\n     {\n      \"bandNumber\": \"<number>\",\n      \"bandName\": \"<string>\",\n      \"minValue\": \"<string>\",\n      \"maxValue\": \"<string>\"\n     }\n    ],\n    \"bounds\": {\n     \"ne\": {\n      \"lat\": \"<number>\",\n      \"lng\": \"<number>\"\n     },\n     \"nw\": {\n      \"lat\": \"<number>\",\n      \"lng\": \"<number>\"\n     },\n     \"se\": {\n      \"lat\": \"<number>\",\n      \"lng\": \"<number>\"\n     },\n     \"sw\": {\n      \"lat\": \"<number>\",\n      \"lng\": \"<number>\"\n     }\n    },\n    \"outline\": {\n     \"type\": \"<string>\",\n     \"geometry\": {\n      \"type\": \"<string>\",\n      \"coordinates\": [\n       [\n        [\n         \"<number>\",\n         \"<number>\"\n        ],\n        [\n         \"<number>\",\n         \"<number>\"\n        ],\n        [\n         \"<number>\",\n         \"<number>\"\n        ]\n       ]\n      ]\n     },\n     \"properties\": \"<object>\"\n    },\n    \"minZoom\": \"<number>\",\n    \"maxZoom\": \"<number>\"\n   },\n   \"maptiles\": {\n    \"baseURL\": \"<string>\",\n    \"cdnToken\": \"<string>\",\n    \"bounds\": {\n     \"ne\": {\n      \"lat\": \"<number>\",\n      \"lng\": \"<number>\"\n     },\n     \"nw\": {\n      \"lat\": \"<number>\",\n      \"lng\": \"<number>\"\n     },\n     \"se\": {\n      \"lat\": \"<number>\",\n      \"lng\": \"<number>\"\n     },\n     \"sw\": {\n      \"lat\": \"<number>\",\n      \"lng\": \"<number>\"\n     }\n    },\n    \"minZoom\": \"<number>\",\n    \"maxZoom\": \"<number>\"\n   },\n   \"published\": \"<boolean>\",\n   \"publishedAt\": \"<number>\",\n   \"archived\": \"<boolean>\",\n   \"archivedAt\": \"<number>\",\n   \"metaData\": {\n    \"userRole\": {}\n   },\n   \"fileUploadCreds\": {\n    \"url\": \"<string>\",\n    \"method\": \"<string>\",\n    \"headers\": [\n     {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\"\n     },\n     {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\"\n     }\n    ],\n    \"bodyParams\": [\n     {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\"\n     },\n     {\n      \"key\": \"<string>\",\n      \"value\": \"<string>\"\n     }\n    ]\n   }\n  }\n }\n}"
+										}
+									]
+								},
+								{
+									"name": "Post file upload - Support alph numaric and special character",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"pm.test(\"Response body status is 'success'\", function () {\r",
+													"    var jsonData = pm.response.json();\r",
+													"    pm.expect(jsonData.status).to.eql(\"success\");\r",
+													"});\r",
+													"var message = \"Generated File Upload Credentials\";\r",
+													"pm.test(\"Response body message is '\"+message+\"'\", function () {\r",
+													"    var jsonData = pm.response.json();\r",
+													"    pm.expect(jsonData.message).to.eql(message);\r",
+													"});\r",
+													"pm.test(\"Content-Type is present\", function () {\r",
+													"    pm.response.to.have.header(\"Content-Type\")  ;\r",
+													"});\r",
+													"pm.test(\"Status code name has string\", function () {\r",
+													"    pm.response.to.have.status(\"OK\");\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"files\": [\n    {\n      \"name\": \"{{orgName}}_!!@#$%^&*()+=-|''}`~{][:;><.,/?\",\n      \"sizeInBytes\": 0,\n      \"type\": \"geotiff\"\n    }\n  ]\n}"
+										},
+										"url": {
+											"raw": "{{baseUrlFileUpload}}/organisations/{{orgUuid}}/sites/{{siteUuid}}/surveys/{{surveyUuid}}/elements/raster/{{rasterUuid}}/file-upload-credentials",
+											"host": [
+												"{{baseUrlFileUpload}}"
+											],
+											"path": [
+												"organisations",
+												"{{orgUuid}}",
+												"sites",
+												"{{siteUuid}}",
+												"surveys",
+												"{{surveyUuid}}",
+												"elements",
+												"raster",
+												"{{rasterUuid}}",
+												"file-upload-credentials"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Get File Uuid of alpha numeric file",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"if(pm.expect(pm.response.json().status).to.eql(\"success\")){\r",
+													"    pm.environment.set(\"fileUuidAlphaNumericDelete\", pm.response.json().data.raster.geotiff.uuid);\r",
+													"}\r",
+													"\r",
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"pm.test(\"Response body has tatus as 'success'\", function () {\r",
+													"    pm.expect(pm.response.json().status).to.eql(\"success\");\r",
+													"});\r",
+													"pm.test(\"Content-Type is present\", function () {\r",
+													"    pm.response.to.have.header(\"Content-Type\");\r",
+													"});\r",
+													"pm.test(\"Status code name has string\", function () {\r",
+													"    pm.response.to.have.status(\"OK\");\r",
+													"});\r",
+													"pm.test(\"Response body raster name is equal to : '\"+pm.environment.get(\"rasterName\")+\"'\", function () {\r",
+													"    pm.expect(pm.response.json().data.raster.name).to.eql(pm.environment.get(\"rasterName\"));\r",
+													"});\r",
+													"pm.test(\"Response body should have raster uuid as expected.\", function () {;\r",
+													"    pm.expect(pm.response.json().data.raster.uuid).to.eql(pm.environment.get(\"rasterUuid\"));\r",
+													"});\r",
+													"pm.test(\"Response body should have survey uuid as expected.\", function () {;\r",
+													"    pm.expect(pm.response.json().data.raster.refUuid.surveyUuid).to.eql(pm.environment.get(\"surveyUuid\"));\r",
+													"});\r",
+													"pm.test(\"Response body should have site uuid as expected.\", function () {;\r",
+													"    pm.expect(pm.response.json().data.raster.refUuid.siteUuid).to.eql(pm.environment.get(\"siteUuid\"));\r",
+													"});\r",
+													"pm.test(\"Response body should have site uuid as expected.\", function () {;\r",
+													"    pm.expect(pm.response.json().data.raster.refUuid.organisationUuid).to.eql(pm.environment.get(\"orgUuid\"));\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/organisations/:organisationUuid/sites/:siteUuid/surveys/:surveyUuid/rasters/:rasterUuid",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"organisations",
+												":organisationUuid",
+												"sites",
+												":siteUuid",
+												"surveys",
+												":surveyUuid",
+												"rasters",
+												":rasterUuid"
+											],
+											"variable": [
+												{
+													"key": "organisationUuid",
+													"value": "{{orgUuid}}",
+													"type": "string",
+													"description": "(Required) "
+												},
+												{
+													"key": "siteUuid",
+													"value": "{{siteUuid}}",
+													"type": "string",
+													"description": "(Required) "
+												},
+												{
+													"key": "surveyUuid",
+													"value": "{{surveyUuid}}",
+													"type": "string",
+													"description": "(Required) "
+												},
+												{
+													"key": "rasterUuid",
+													"value": "{{rasterUuid}}",
+													"type": "string"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Successful only when a user has access to annotation",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/core/v1/organisation/:organisationUuid/site/:siteUuid/survey/:surveyUuid/annotation/:annotationUuid",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"core",
+														"v1",
+														"organisation",
+														":organisationUuid",
+														"site",
+														":siteUuid",
+														"survey",
+														":surveyUuid",
+														"annotation",
+														":annotationUuid"
+													],
+													"variable": [
+														{
+															"key": "organisationUuid"
+														},
+														{
+															"key": "siteUuid"
+														},
+														{
+															"key": "surveyUuid"
+														},
+														{
+															"key": "annotationUuid"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n \"status\": \"queued\",\n \"message\": \"laboris sint\",\n \"data\": {\n  \"annotation\": {\n   \"name\": \"nostrud eu\",\n   \"refUuid\": {\n    \"organisationUuid\": \"velit in nostrud Excepteur\",\n    \"siteUuid\": \"Lorem fugiat mollit\",\n    \"surveyUuid\": \"irure elit ea\"\n   },\n   \"geojson\": {\n    \"type\": \"Feature\",\n    \"geometry\": {\n     \"type\": \"Point\",\n     \"coordinates\": [\n      -4283317.660607502,\n      -60014066.241007894\n     ]\n    },\n    \"properties\": \"<object>\"\n   },\n   \"permalink\": \"aliqua minim velit ut in\",\n   \"uuid\": \"incididunt sit\",\n   \"createdBy\": \"Ut Duis sit\",\n   \"createdAt\": -22587323.52630721,\n   \"updatedAt\": 89449165.98390305,\n   \"metaData\": {\n    \"userRole\": {}\n   }\n  }\n }\n}"
+										},
+										{
+											"name": "User is not logged in",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/core/v1/organisation/:organisationUuid/site/:siteUuid/survey/:surveyUuid/annotation/:annotationUuid",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"core",
+														"v1",
+														"organisation",
+														":organisationUuid",
+														"site",
+														":siteUuid",
+														"survey",
+														":surveyUuid",
+														"annotation",
+														":annotationUuid"
+													],
+													"variable": [
+														{
+															"key": "organisationUuid"
+														},
+														{
+															"key": "siteUuid"
+														},
+														{
+															"key": "surveyUuid"
+														},
+														{
+															"key": "annotationUuid"
+														}
+													]
+												}
+											},
+											"status": "Unauthorized",
+											"code": 401,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										},
+										{
+											"name": "When the get annotation details call fails internally",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/core/v1/organisation/:organisationUuid/site/:siteUuid/survey/:surveyUuid/annotation/:annotationUuid",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"core",
+														"v1",
+														"organisation",
+														":organisationUuid",
+														"site",
+														":siteUuid",
+														"survey",
+														":surveyUuid",
+														"annotation",
+														":annotationUuid"
+													],
+													"variable": [
+														{
+															"key": "organisationUuid"
+														},
+														{
+															"key": "siteUuid"
+														},
+														{
+															"key": "surveyUuid"
+														},
+														{
+															"key": "annotationUuid"
+														}
+													]
+												}
+											},
+											"status": "Internal Server Error",
+											"code": 500,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								},
+								{
+									"name": "Deleting alpha numaric file upload created",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"pm.test(\"Body matches string : 'Deleted Organisation'\", function () {\r",
+													"    pm.expect(pm.response.text()).to.include(\"Deleted Organisation\");\r",
+													"});\r",
+													"pm.test(\"Content-Type is present\", function () {\r",
+													"    pm.response.to.have.header(\"Content-Type\");\r",
+													"});\r",
+													"pm.test(\"Status code name has string\", function () {\r",
+													"    pm.response.to.have.status(\"OK\");\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrlFileUpload}}/organisations/:organisationUuid/sites/:siteUuid/surveys/:surveyUuid/elements/:elementType/:elementUuid/files/:fileUuid",
+											"host": [
+												"{{baseUrlFileUpload}}"
+											],
+											"path": [
+												"organisations",
+												":organisationUuid",
+												"sites",
+												":siteUuid",
+												"surveys",
+												":surveyUuid",
+												"elements",
+												":elementType",
+												":elementUuid",
+												"files",
+												":fileUuid"
+											],
+											"variable": [
+												{
+													"key": "organisationUuid",
+													"value": "{{orgUuid}}",
+													"type": "string"
+												},
+												{
+													"key": "siteUuid",
+													"value": "{{siteUuid}}",
+													"type": "string"
+												},
+												{
+													"key": "surveyUuid",
+													"value": "{{surveyUuid}}",
+													"type": "string"
+												},
+												{
+													"key": "elementType",
+													"value": "raster",
+													"type": "string"
+												},
+												{
+													"key": "elementUuid",
+													"value": "{{rasterUuid}}",
+													"type": "string"
+												},
+												{
+													"key": "fileUuid",
+													"value": "{{fileUuidAlphaNumericDelete}}",
+													"type": "string"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Successful only when a user has access to org delete perms",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/v2/organisation/:organisationUuid",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v2",
+														"organisation",
+														":organisationUuid"
+													],
+													"variable": [
+														{
+															"key": "organisationUuid"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n \"status\": \"<string>\",\n \"message\": \"<string>\"\n}"
+										},
+										{
+											"name": "When the delete org call fails internally",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/v2/organisation/:organisationUuid",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v2",
+														"organisation",
+														":organisationUuid"
+													],
+													"variable": [
+														{
+															"key": "organisationUuid"
+														}
+													]
+												}
+											},
+											"status": "Internal Server Error",
+											"code": 500,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										},
+										{
+											"name": "User is not logged in",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/v2/organisation/:organisationUuid",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v2",
+														"organisation",
+														":organisationUuid"
+													],
+													"variable": [
+														{
+															"key": "organisationUuid"
+														}
+													]
+												}
+											},
+											"status": "Unauthorized",
+											"code": 401,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								},
+								{
+									"name": "Post file upload - invalid content-type header",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 415\", function () {\r",
+													"    pm.response.to.have.status(415);\r",
+													"});\r",
+													"pm.test(\"Response Body has status as 'failure'\", function () {\r",
+													"    pm.expect(pm.response.json().status).to.eql(\"failure\");\r",
+													"});\r",
+													"pm.test(\"Response Body has message as 'Unsupported media type'\", function () {\r",
+													"    pm.expect(pm.response.json().message).to.contain(\"Unsupported media type\");\r",
+													"});\r",
+													"pm.test(\"Content-Type is present\", function () {\r",
+													"    pm.response.to.have.header(\"Content-Type\");\r",
+													"});\r",
+													"pm.test(\"Status code name has string\", function () {\r",
+													"    pm.response.to.have.status(\"Unsupported Media Type\");\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disabledSystemHeaders": {
+											"accept": true,
+											"content-type": true
+										}
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/x-yaml",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"files\": [\n    {\n      \"name\": \"string\",\n      \"sizeInBytes\": 0,\n      \"type\": \"geotiff\"\n    }\n  ]\n}"
+										},
+										"url": {
+											"raw": "{{baseUrlFileUpload}}/organisations/{{orgUuid}}/sites/{{siteUuid}}/surveys/{{surveyUuid}}/elements/raster/{{rasterUuid}}/file-upload-credentials",
+											"host": [
+												"{{baseUrlFileUpload}}"
+											],
+											"path": [
+												"organisations",
+												"{{orgUuid}}",
+												"sites",
+												"{{siteUuid}}",
+												"surveys",
+												"{{surveyUuid}}",
+												"elements",
+												"raster",
+												"{{rasterUuid}}",
+												"file-upload-credentials"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Post file upload - invalid accept header",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 406\", function () {\r",
+													"    pm.response.to.have.status(406);\r",
+													"});\r",
+													"var message = \"Could not satisfy the request Accept header.\";\r",
+													"pm.test(\"Response body message is '\"+message+\"'\", function () {\r",
+													"    pm.expect(pm.response.json().message).to.eql(message);\r",
+													"});\r",
+													"pm.test(\"Response body status is 'failure'\", function () {\r",
+													"    pm.expect(pm.response.json().status).to.eql(\"failure\");\r",
+													"});\r",
+													"pm.test(\"Content-Type is present\", function () {\r",
+													"    pm.response.to.have.header(\"Content-Type\");\r",
+													"});\r",
+													"pm.test(\"Status code name has string\", function () {\r",
+													"    pm.response.to.have.status(\"Not Acceptable\");\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"protocolProfileBehavior": {
+										"disabledSystemHeaders": {}
+									},
+									"request": {
+										"method": "POST",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/xml",
+												"type": "text"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"files\": [\n    {\n      \"name\": \"string\",\n      \"sizeInBytes\": 0,\n      \"type\": \"geotiff\"\n    }\n  ]\n}",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrlFileUpload}}/organisations/{{orgUuid}}/sites/{{siteUuid}}/surveys/{{surveyUuid}}/elements/raster/{{rasterUuid}}/file-upload-credentials",
+											"host": [
+												"{{baseUrlFileUpload}}"
+											],
+											"path": [
+												"organisations",
+												"{{orgUuid}}",
+												"sites",
+												"{{siteUuid}}",
+												"surveys",
+												"{{surveyUuid}}",
+												"elements",
+												"raster",
+												"{{rasterUuid}}",
+												"file-upload-credentials"
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Post file upload - invalid auth token",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 401\", function () {\r",
+													"    pm.response.to.have.status(401);\r",
+													"});\r",
+													"pm.test(\"Status code name has Unauthorized\", function () {\r",
+													"    pm.response.to.have.status(\"Unauthorized\");\r",
+													"});\r",
+													"pm.test(\"response body status value is 'failure'\", function () {\r",
+													"    pm.expect(pm.response.json().status).to.eql(\"failure\");\r",
+													"});\r",
+													"pm.test(\"response body message is 'Failed Request Due To Validation'\", function () {\r",
+													"    pm.expect(pm.response.json().message).to.eql(\"Failed Request Due To Validation\");\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ik1qTkZRVUkyT1RRM01qTXpOa1l4TmpCQ04wSTVNa0kxUmpFNVFVSkVOelkzTnpnNFJqTXpRZyJ9.eyJodHRwczovL2V4YW1wbGUuY29tL3JvbGVzIjpbInVzZXIiXSwiaHR0cHM6Ly9kamFuZ28td2ViYXBwL3JvbGUiOiJ1c2VyIiwibmlja25hbWUiOiJwYW5rYWouZGV2cmFuaSIsIm5hbWUiOiJwYW5rYWouZGV2cmFuaUBhc3RlcmlhLmNvLmluIiwicGljdHVyZSI6Imh0dHBzOi8vcy5ncmF2YXRhci5jb20vYXZhdGFyLzRjN2YzYzM0OWNkYzkzZmMxODVmMTMzMThhZjIzMjcxP3M9NDgwJnI9cGcmZD1odHRwcyUzQSUyRiUyRmNkbi5hdXRoMC5jb20lMkZhdmF0YXJzJTJGcGEucG5nIiwidXBkYXRlZF9hdCI6IjIwMjAtMDYtMTFUMTI6MzU6MjQuMTk4WiIsImlzcyI6Imh0dHBzOi8vaW5zaWdodDEuYXV0aDAuY29tLyIsInN1YiI6ImF1dGgwfDVlYzdiMTBjZTZmNGUwMGJmMjAzNzZjMyIsImF1ZCI6IlNzTENHTmdnMHlBN0I3c0g1ZU5WTUZtQ1A5SlZkZGUzIiwiaWF0IjoxNTkxOTQ3NDYwLCJleHAiOjE1OTE5ODM0NjB9.kYNMikKc84EQXRC32dwkOXW0gkJKfqQTOLVmOkKs5QmvVKcVQNZVbo4fQFuYf07Qu1OpvYKmqBHf3Z5H8nsy-Mfeyufgr86X_p5vdThkpCGMzg3uX06LqKoVDcRRzDndQpmvve5Ripla3ucN5IME363U1EfwqmDPs4jBoAxuB80qurcVq3NBn8dOJzJNCRgGW-aHPP6LJAvezGgWpiDnKRcKLIbU2ig7h5t-8LhWOKDi48TBHGyOQYdxqUE7fC2NCi6ghTX7SnLxXA6S1SMwpqQgAApEnjklY8ImuP6in3Rd5JnvJJedDZTcYWK43iKBMoe5exhYd547XNtpQWttww",
+													"type": "string"
+												}
+											]
+										},
+										"method": "POST",
+										"header": [
+											{
+												"key": "Content-Type",
+												"value": "application/json"
+											}
+										],
+										"body": {
+											"mode": "raw",
+											"raw": "{\n  \"files\": [\n    {\n      \"name\": \"string\",\n      \"sizeInBytes\": 0,\n      \"type\": \"geotiff\"\n    }\n  ]\n}"
+										},
+										"url": {
+											"raw": "{{baseUrlFileUpload}}/organisations/{{orgUuid}}/sites/{{siteUuid}}/surveys/{{surveyUuid}}/elements/raster/{{rasterUuid}}/file-upload-credentials",
+											"host": [
+												"{{baseUrlFileUpload}}"
+											],
+											"path": [
+												"organisations",
+												"{{orgUuid}}",
+												"sites",
+												"{{siteUuid}}",
+												"surveys",
+												"{{surveyUuid}}",
+												"elements",
+												"raster",
+												"{{rasterUuid}}",
+												"file-upload-credentials"
+											]
+										}
+									},
+									"response": []
+								}
+							]
+						},
+						{
+							"name": "Get Raster File Upload Uuid",
+							"item": [
+								{
+									"name": "Get Raster File Upload Uuid",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"if(pm.response.to.have.status(200)){\r",
+													"    pm.environment.set(\"fileUploadRasterUuid\", pm.response.json().data.raster.geotiff.uuid);\r",
+													"}\r",
+													"\r",
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"pm.test(\"Response body has tatus as 'success'\", function () {\r",
+													"    pm.expect(pm.response.json().status).to.eql(\"success\");\r",
+													"});\r",
+													"pm.test(\"Content-Type is present\", function () {\r",
+													"    pm.response.to.have.header(\"Content-Type\");\r",
+													"});\r",
+													"pm.test(\"Status code name has string\", function () {\r",
+													"    pm.response.to.have.status(\"OK\");\r",
+													"});\r",
+													"pm.test(\"Response body raster name is equal to : '\"+pm.environment.get(\"rasterName\")+\"'\", function () {\r",
+													"    pm.expect(pm.response.json().data.raster.name).to.eql(pm.environment.get(\"rasterName\"));\r",
+													"});\r",
+													"pm.test(\"Response body should have raster uuid as expected.\", function () {;\r",
+													"    pm.expect(pm.response.json().data.raster.uuid).to.eql(pm.environment.get(\"rasterUuid\"));\r",
+													"});\r",
+													"pm.test(\"Response body should have survey uuid as expected.\", function () {;\r",
+													"    pm.expect(pm.response.json().data.raster.refUuid.surveyUuid).to.eql(pm.environment.get(\"surveyUuid\"));\r",
+													"});\r",
+													"pm.test(\"Response body should have site uuid as expected.\", function () {;\r",
+													"    pm.expect(pm.response.json().data.raster.refUuid.siteUuid).to.eql(pm.environment.get(\"siteUuid\"));\r",
+													"});\r",
+													"pm.test(\"Response body should have site uuid as expected.\", function () {;\r",
+													"    pm.expect(pm.response.json().data.raster.refUuid.organisationUuid).to.eql(pm.environment.get(\"orgUuid\"));\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "GET",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/organisations/:organisationUuid/sites/:siteUuid/surveys/:surveyUuid/rasters/:rasterUuid",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"organisations",
+												":organisationUuid",
+												"sites",
+												":siteUuid",
+												"surveys",
+												":surveyUuid",
+												"rasters",
+												":rasterUuid"
+											],
+											"variable": [
+												{
+													"description": "(Required) ",
+													"key": "organisationUuid",
+													"type": "string",
+													"value": "{{orgUuid}}"
+												},
+												{
+													"description": "(Required) ",
+													"key": "siteUuid",
+													"type": "string",
+													"value": "{{siteUuid}}"
+												},
+												{
+													"description": "(Required) ",
+													"key": "surveyUuid",
+													"type": "string",
+													"value": "{{surveyUuid}}"
+												},
+												{
+													"key": "rasterUuid",
+													"type": "string",
+													"value": "{{rasterUuid}}"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "Successful only when a user has access to annotation",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/core/v1/organisation/:organisationUuid/site/:siteUuid/survey/:surveyUuid/annotation/:annotationUuid",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"core",
+														"v1",
+														"organisation",
+														":organisationUuid",
+														"site",
+														":siteUuid",
+														"survey",
+														":surveyUuid",
+														"annotation",
+														":annotationUuid"
+													],
+													"variable": [
+														{
+															"key": "organisationUuid"
+														},
+														{
+															"key": "siteUuid"
+														},
+														{
+															"key": "surveyUuid"
+														},
+														{
+															"key": "annotationUuid"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n \"status\": \"queued\",\n \"message\": \"laboris sint\",\n \"data\": {\n  \"annotation\": {\n   \"name\": \"nostrud eu\",\n   \"refUuid\": {\n    \"organisationUuid\": \"velit in nostrud Excepteur\",\n    \"siteUuid\": \"Lorem fugiat mollit\",\n    \"surveyUuid\": \"irure elit ea\"\n   },\n   \"geojson\": {\n    \"type\": \"Feature\",\n    \"geometry\": {\n     \"type\": \"Point\",\n     \"coordinates\": [\n      -4283317.660607502,\n      -60014066.241007894\n     ]\n    },\n    \"properties\": \"<object>\"\n   },\n   \"permalink\": \"aliqua minim velit ut in\",\n   \"uuid\": \"incididunt sit\",\n   \"createdBy\": \"Ut Duis sit\",\n   \"createdAt\": -22587323.52630721,\n   \"updatedAt\": 89449165.98390305,\n   \"metaData\": {\n    \"userRole\": {}\n   }\n  }\n }\n}"
+										},
+										{
+											"name": "User is not logged in",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/core/v1/organisation/:organisationUuid/site/:siteUuid/survey/:surveyUuid/annotation/:annotationUuid",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"core",
+														"v1",
+														"organisation",
+														":organisationUuid",
+														"site",
+														":siteUuid",
+														"survey",
+														":surveyUuid",
+														"annotation",
+														":annotationUuid"
+													],
+													"variable": [
+														{
+															"key": "organisationUuid"
+														},
+														{
+															"key": "siteUuid"
+														},
+														{
+															"key": "surveyUuid"
+														},
+														{
+															"key": "annotationUuid"
+														}
+													]
+												}
+											},
+											"status": "Unauthorized",
+											"code": 401,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										},
+										{
+											"name": "When the get annotation details call fails internally",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/core/v1/organisation/:organisationUuid/site/:siteUuid/survey/:surveyUuid/annotation/:annotationUuid",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"core",
+														"v1",
+														"organisation",
+														":organisationUuid",
+														"site",
+														":siteUuid",
+														"survey",
+														":surveyUuid",
+														"annotation",
+														":annotationUuid"
+													],
+													"variable": [
+														{
+															"key": "organisationUuid"
+														},
+														{
+															"key": "siteUuid"
+														},
+														{
+															"key": "surveyUuid"
+														},
+														{
+															"key": "annotationUuid"
+														}
+													]
+												}
+											},
+											"status": "Internal Server Error",
+											"code": 500,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "Remove File From an Raster",
+							"item": [
+								{
+									"name": "Remove raster - wrong siteUuid",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 404\", function () {\r",
+													"    pm.response.to.have.status(404);\r",
+													"});\r",
+													"pm.test(\"Response body status is : 'failure'\", function () {\r",
+													"    pm.expect(pm.response.json().status).to.eql(\"failure\");\r",
+													"});\r",
+													"var errorMessage = \"Resource Not Found\";\r",
+													"pm.test(\"Response body has message as : '\"+errorMessage+\"'\", function () {\r",
+													"    pm.expect(pm.response.json().message).to.eql(errorMessage);\r",
+													"});\r",
+													"pm.test(\"Content-Type is present\", function () {\r",
+													"    pm.response.to.have.header(\"Content-Type\");\r",
+													"});\r",
+													"pm.test(\"Status code name has string\", function () {\r",
+													"    pm.response.to.have.status(\"NOT FOUND\");\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrlFileUpload}}/organisations/:organisationUuid/sites/:siteUuid/surveys/:surveyUuid/elements/:elementType/:elementUuid/files/:fileUuid",
+											"host": [
+												"{{baseUrlFileUpload}}"
+											],
+											"path": [
+												"organisations",
+												":organisationUuid",
+												"sites",
+												":siteUuid",
+												"surveys",
+												":surveyUuid",
+												"elements",
+												":elementType",
+												":elementUuid",
+												"files",
+												":fileUuid"
+											],
+											"variable": [
+												{
+													"key": "organisationUuid",
+													"type": "string",
+													"value": "{{orgUuid}}"
+												},
+												{
+													"key": "siteUuid",
+													"type": "string",
+													"value": "kljsadlka"
+												},
+												{
+													"description": "(Required) ",
+													"key": "surveyUuid",
+													"type": "string",
+													"value": "{{surveyUuid}}"
+												},
+												{
+													"key": "elementType",
+													"value": "raster"
+												},
+												{
+													"key": "elementUuid",
+													"value": "{{rasterUuid}}"
+												},
+												{
+													"key": "fileUuid",
+													"value": "{{fileUploadRasterUuid}}"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Remove raster - wrong surveyUuid",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 404\", function () {\r",
+													"    pm.response.to.have.status(404);\r",
+													"});\r",
+													"pm.test(\"Response body status is : 'failure'\", function () {\r",
+													"    pm.expect(pm.response.json().status).to.eql(\"failure\");\r",
+													"});\r",
+													"var errorMessage = \"Resource Not Found\";\r",
+													"pm.test(\"Response body has message as : '\"+errorMessage+\"'\", function () {\r",
+													"    pm.expect(pm.response.json().message).to.eql(errorMessage);\r",
+													"});\r",
+													"pm.test(\"Content-Type is present\", function () {\r",
+													"    pm.response.to.have.header(\"Content-Type\");\r",
+													"});\r",
+													"pm.test(\"Status code name has string\", function () {\r",
+													"    pm.response.to.have.status(\"NOT FOUND\");\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrlFileUpload}}/organisations/:organisationUuid/sites/:siteUuid/surveys/:surveyUuid/elements/:elementType/:elementUuid/files/:fileUuid",
+											"host": [
+												"{{baseUrlFileUpload}}"
+											],
+											"path": [
+												"organisations",
+												":organisationUuid",
+												"sites",
+												":siteUuid",
+												"surveys",
+												":surveyUuid",
+												"elements",
+												":elementType",
+												":elementUuid",
+												"files",
+												":fileUuid"
+											],
+											"variable": [
+												{
+													"key": "organisationUuid",
+													"type": "string",
+													"value": "{{orgUuid}}"
+												},
+												{
+													"key": "siteUuid",
+													"type": "string",
+													"value": "{{siteUuid}}"
+												},
+												{
+													"description": "(Required) ",
+													"key": "surveyUuid",
+													"type": "string",
+													"value": "=="
+												},
+												{
+													"key": "elementType",
+													"value": "raster"
+												},
+												{
+													"key": "elementUuid",
+													"value": "{{rasterUuid}}"
+												},
+												{
+													"key": "fileUuid",
+													"value": "{{fileUploadRasterUuid}}"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Remove raster - wrong ElementType",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 404\", function () {\r",
+													"    pm.response.to.have.status(404);\r",
+													"});\r",
+													"pm.test(\"Response body status is : 'failure'\", function () {\r",
+													"    pm.expect(pm.response.json().status).to.eql(\"failure\");\r",
+													"});\r",
+													"var errorMessage = \"Resource Not Found\";\r",
+													"pm.test(\"Response body has message as : '\"+errorMessage+\"'\", function () {\r",
+													"    pm.expect(pm.response.json().message).to.eql(errorMessage);\r",
+													"});\r",
+													"pm.test(\"Content-Type is present\", function () {\r",
+													"    pm.response.to.have.header(\"Content-Type\");\r",
+													"});\r",
+													"pm.test(\"Status code name has string\", function () {\r",
+													"    pm.response.to.have.status(\"NOT FOUND\");\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrlFileUpload}}/organisations/:organisationUuid/sites/:siteUuid/surveys/:surveyUuid/elements/:elementType/:elementUuid/files/:fileUuid",
+											"host": [
+												"{{baseUrlFileUpload}}"
+											],
+											"path": [
+												"organisations",
+												":organisationUuid",
+												"sites",
+												":siteUuid",
+												"surveys",
+												":surveyUuid",
+												"elements",
+												":elementType",
+												":elementUuid",
+												"files",
+												":fileUuid"
+											],
+											"variable": [
+												{
+													"key": "organisationUuid",
+													"type": "string",
+													"value": "{{orgUuid}}"
+												},
+												{
+													"key": "siteUuid",
+													"type": "string",
+													"value": "{{siteUuid}}"
+												},
+												{
+													"description": "(Required) ",
+													"key": "surveyUuid",
+													"type": "string",
+													"value": "{{surveyUuid}}"
+												},
+												{
+													"key": "elementType",
+													"value": "rasterlajslkd"
+												},
+												{
+													"key": "elementUuid",
+													"value": "{{rasterUuid}}"
+												},
+												{
+													"key": "fileUuid",
+													"value": "{{fileUploadRasterUuid}}"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Remove raster - wrong fileUploadRasterUuid",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 404\", function () {\r",
+													"    pm.response.to.have.status(404);\r",
+													"});\r",
+													"pm.test(\"Response body status is : 'failure'\", function () {\r",
+													"    pm.expect(pm.response.json().status).to.eql(\"failure\");\r",
+													"});\r",
+													"var errorMessage = \"Resource Not Found\";\r",
+													"pm.test(\"Response body has message as : '\"+errorMessage+\"'\", function () {\r",
+													"    pm.expect(pm.response.json().message).to.eql(errorMessage);\r",
+													"});\r",
+													"pm.test(\"Content-Type is present\", function () {\r",
+													"    pm.response.to.have.header(\"Content-Type\");\r",
+													"});\r",
+													"pm.test(\"Status code name has string\", function () {\r",
+													"    pm.response.to.have.status(\"NOT FOUND\");\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrlFileUpload}}/organisations/:organisationUuid/sites/:siteUuid/surveys/:surveyUuid/elements/:elementType/:elementUuid/files/:fileUuid",
+											"host": [
+												"{{baseUrlFileUpload}}"
+											],
+											"path": [
+												"organisations",
+												":organisationUuid",
+												"sites",
+												":siteUuid",
+												"surveys",
+												":surveyUuid",
+												"elements",
+												":elementType",
+												":elementUuid",
+												"files",
+												":fileUuid"
+											],
+											"variable": [
+												{
+													"key": "organisationUuid",
+													"type": "string",
+													"value": "{{orgUuid}}"
+												},
+												{
+													"key": "siteUuid",
+													"type": "string",
+													"value": "{{siteUuid}}"
+												},
+												{
+													"description": "(Required) ",
+													"key": "surveyUuid",
+													"type": "string",
+													"value": "{{surveyUuid}}"
+												},
+												{
+													"key": "elementType",
+													"value": "raster"
+												},
+												{
+													"key": "elementUuid",
+													"value": "{{rasterUuid}}"
+												},
+												{
+													"key": "fileUuid",
+													"value": "asndkakjsdbja"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Remove raster - wrong rasterUuid",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 404\", function () {\r",
+													"    pm.response.to.have.status(404);\r",
+													"});\r",
+													"pm.test(\"Response body status is : 'failure'\", function () {\r",
+													"    pm.expect(pm.response.json().status).to.eql(\"failure\");\r",
+													"});\r",
+													"var errorMessage = \"Resource Not Found\";\r",
+													"pm.test(\"Response body has message as : '\"+errorMessage+\"'\", function () {\r",
+													"    pm.expect(pm.response.json().message).to.eql(errorMessage);\r",
+													"});\r",
+													"pm.test(\"Content-Type is present\", function () {\r",
+													"    pm.response.to.have.header(\"Content-Type\");\r",
+													"});\r",
+													"pm.test(\"Status code name has string\", function () {\r",
+													"    pm.response.to.have.status(\"Not Found\");\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrlFileUpload}}/organisations/:organisationUuid/sites/:siteUuid/surveys/:surveyUuid/elements/:elementType/:elementUuid/files/:fileUuid",
+											"host": [
+												"{{baseUrlFileUpload}}"
+											],
+											"path": [
+												"organisations",
+												":organisationUuid",
+												"sites",
+												":siteUuid",
+												"surveys",
+												":surveyUuid",
+												"elements",
+												":elementType",
+												":elementUuid",
+												"files",
+												":fileUuid"
+											],
+											"variable": [
+												{
+													"key": "organisationUuid",
+													"type": "string",
+													"value": "{{orgUuid}}"
+												},
+												{
+													"key": "siteUuid",
+													"type": "string",
+													"value": "{{siteUuid}}"
+												},
+												{
+													"description": "(Required) ",
+													"key": "surveyUuid",
+													"type": "string",
+													"value": "{{surveyUuid}}"
+												},
+												{
+													"key": "elementType",
+													"value": "raster"
+												},
+												{
+													"key": "elementUuid",
+													"value": "kahdkjashkdj"
+												},
+												{
+													"key": "fileUuid",
+													"value": "{{fileUploadRasterUuid}}"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Remove a file upload (soft delete)",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"pm.test(\"Response body status is : 'success'\", function () {\r",
+													"    pm.expect(pm.response.json().status).to.eql(\"success\");\r",
+													"});\r",
+													"pm.test(\"Response body has message : 'File Deleted'\", function () {\r",
+													"    pm.expect(pm.response.json().message).to.eql(\"File Deleted\");\r",
+													"});\r",
+													"pm.test(\"Content-Type is present\", function () {\r",
+													"    pm.response.to.have.header(\"Content-Type\");\r",
+													"});\r",
+													"pm.test(\"Status code name has string\", function () {\r",
+													"    pm.response.to.have.status(\"OK\");\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrlFileUpload}}/organisations/:organisationUuid/sites/:siteUuid/surveys/:surveyUuid/elements/:elementType/:elementUuid/files/:fileUuid",
+											"host": [
+												"{{baseUrlFileUpload}}"
+											],
+											"path": [
+												"organisations",
+												":organisationUuid",
+												"sites",
+												":siteUuid",
+												"surveys",
+												":surveyUuid",
+												"elements",
+												":elementType",
+												":elementUuid",
+												"files",
+												":fileUuid"
+											],
+											"variable": [
+												{
+													"key": "organisationUuid",
+													"value": "{{orgUuid}}",
+													"type": "string"
+												},
+												{
+													"key": "siteUuid",
+													"value": "{{siteUuid}}",
+													"type": "string"
+												},
+												{
+													"key": "surveyUuid",
+													"value": "{{surveyUuid}}",
+													"type": "string"
+												},
+												{
+													"key": "elementType",
+													"value": "raster"
+												},
+												{
+													"key": "elementUuid",
+													"value": "{{rasterUuid}}"
+												},
+												{
+													"key": "fileUuid",
+													"value": "{{fileUploadRasterUuid}}"
+												}
+											]
+										},
+										"description": "This is an api reuqest to delete an annotation."
+									},
+									"response": []
+								},
+								{
+									"name": "Remove raster - Duplicate request",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 404\", function () {\r",
+													"    pm.response.to.have.status(404);\r",
+													"});\r",
+													"pm.test(\"Response body status is : 'failure'\", function () {\r",
+													"    pm.expect(pm.response.json().status).to.eql(\"failure\");\r",
+													"});\r",
+													"var errorMessage = \"Resource Not Found\";\r",
+													"pm.test(\"Response body has message as : '\"+errorMessage+\"'\", function () {\r",
+													"    pm.expect(pm.response.json().message).to.eql(errorMessage);\r",
+													"});\r",
+													"pm.test(\"Content-Type is present\", function () {\r",
+													"    pm.response.to.have.header(\"Content-Type\");\r",
+													"});\r",
+													"pm.test(\"Status code name has string\", function () {\r",
+													"    pm.response.to.have.status(\"NOT FOUND\");\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrlFileUpload}}/organisations/:organisationUuid/sites/:siteUuid/surveys/:surveyUuid/elements/:elementType/:elementUuid/files/:fileUuid",
+											"host": [
+												"{{baseUrlFileUpload}}"
+											],
+											"path": [
+												"organisations",
+												":organisationUuid",
+												"sites",
+												":siteUuid",
+												"surveys",
+												":surveyUuid",
+												"elements",
+												":elementType",
+												":elementUuid",
+												"files",
+												":fileUuid"
+											],
+											"variable": [
+												{
+													"key": "organisationUuid",
+													"value": "{{orgUuid}}",
+													"type": "string"
+												},
+												{
+													"key": "siteUuid",
+													"value": "{{siteUuid}}",
+													"type": "string"
+												},
+												{
+													"key": "surveyUuid",
+													"value": "{{surveyUuid}}",
+													"type": "string",
+													"description": "(Required) "
+												},
+												{
+													"key": "elementType",
+													"value": "raster"
+												},
+												{
+													"key": "elementUuid",
+													"value": "{{rasterUuid}}"
+												},
+												{
+													"key": "fileUuid",
+													"value": "{{fileUploadRasterUuid}}"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Remove raster - Invalid accept header",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 406\", function () {\r",
+													"    pm.response.to.have.status(406);\r",
+													"});\r",
+													"var message = \"Could not satisfy the request Accept header.\";\r",
+													"pm.test(\"Response body message is '\"+message+\"'\", function () {\r",
+													"    pm.expect(pm.response.json().message).to.eql(message);\r",
+													"});\r",
+													"pm.test(\"Response body status is 'failure'\", function () {\r",
+													"    pm.expect(pm.response.json().status).to.eql(\"failure\");\r",
+													"});\r",
+													"pm.test(\"Content-Type is present\", function () {\r",
+													"    pm.response.to.have.header(\"Content-Type\");\r",
+													"});\r",
+													"pm.test(\"Status code name has string\", function () {\r",
+													"    pm.response.to.have.status(\"Not Acceptable\");\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [
+											{
+												"key": "Accept",
+												"value": "application/rss+xml",
+												"type": "text"
+											}
+										],
+										"url": {
+											"raw": "{{baseUrlFileUpload}}/organisations/:organisationUuid/sites/:siteUuid/surveys/:surveyUuid/elements/:elementType/:elementUuid/files/:fileUuid",
+											"host": [
+												"{{baseUrlFileUpload}}"
+											],
+											"path": [
+												"organisations",
+												":organisationUuid",
+												"sites",
+												":siteUuid",
+												"surveys",
+												":surveyUuid",
+												"elements",
+												":elementType",
+												":elementUuid",
+												"files",
+												":fileUuid"
+											],
+											"variable": [
+												{
+													"key": "organisationUuid",
+													"value": "{{orgUuid}}",
+													"type": "string"
+												},
+												{
+													"key": "siteUuid",
+													"value": "{{siteUuid}}",
+													"type": "string"
+												},
+												{
+													"key": "surveyUuid",
+													"value": "{{surveyUuid}}",
+													"type": "string",
+													"description": "(Required) "
+												},
+												{
+													"key": "elementType",
+													"value": "raster"
+												},
+												{
+													"key": "elementUuid",
+													"value": "{{rasterUuid}}"
+												},
+												{
+													"key": "fileUuid",
+													"value": "{{fileUploadRasterUuid}}"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Remove raster - Invalid auth token",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 401\", function () {\r",
+													"    pm.response.to.have.status(401);\r",
+													"});\r",
+													"pm.test(\"Status code name has Unauthorized\", function () {\r",
+													"    pm.response.to.have.status(\"Unauthorized\");\r",
+													"});\r",
+													"pm.test(\"response body status value is 'failure'\", function () {\r",
+													"    pm.expect(pm.response.json().status).to.eql(\"failure\");\r",
+													"});\r",
+													"pm.test(\"response body message is 'Failed Request Due To Validation'\", function () {\r",
+													"    pm.expect(pm.response.json().message).to.eql(\"Failed Request Due To Validation\");\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"auth": {
+											"type": "bearer",
+											"bearer": [
+												{
+													"key": "token",
+													"value": "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCIsImtpZCI6Ik1qTkZRVUkyT1RRM01qTXpOa1l4TmpCQ04wSTVNa0kxUmpFNVFVSkVOelkzTnpnNFJqTXpRZyJ9.eyJodHRwczovL2V4YW1wbGUuY29tL3JvbGVzIjpbInVzZXIiXSwiaHR0cHM6Ly9kamFuZ28td2ViYXBwL3JvbGUiOiJ1c2VyIiwibmlja25hbWUiOiJwYW5rYWouZGV2cmFuaSIsIm5hbWUiOiJwYW5rYWouZGV2cmFuaUBhc3RlcmlhLmNvLmluIiwicGljdHVyZSI6Imh0dHBzOi8vcy5ncmF2YXRhci5jb20vYXZhdGFyLzRjN2YzYzM0OWNkYzkzZmMxODVmMTMzMThhZjIzMjcxP3M9NDgwJnI9cGcmZD1odHRwcyUzQSUyRiUyRmNkbi5hdXRoMC5jb20lMkZhdmF0YXJzJTJGcGEucG5nIiwidXBkYXRlZF9hdCI6IjIwMjAtMDYtMTJUMDc6Mzc6MzkuMDE0WiIsImlzcyI6Imh0dHBzOi8vaW5zaWdodDEuYXV0aDAuY29tLyIsInN1YiI6ImF1dGgwfDVlYzdiMTBjZTZmNGUwMGJmMjAzNzZjMyIsImF1ZCI6IlNzTENHTmdnMHlBN0I3c0g1ZU5WTUZtQ1A5SlZkZGUzIiwiaWF0IjoxNTkyMjAxNzc2LCJleHAiOjE1OTIyMzc3NzZ9.NfOcvlsmhi6na-fut67v3PCOhku1EFYM9SvUCaqhSrM4D5ItQS9d-4Z_H8n3x5nc6r4rvTG09Pn3Gk-sDdf1137QmSdgzC-HfYYVEmR5xbiLYHPmZZnxL9ItjKNBYYbY9VBWzSpT434Vzz7DnjiJkyos3mDrLMACjDLQQ-6jCVplDXkOh0NHzQBWy6traQhkKkLceeZ3sa9Bc4PjQt18jzS5a50VHjitaczIZje7ILPeKtG0T3sNIrISyl5HZUK_KXmyzTMKw_9I9zAExkT9GGMBwqxfC6XpQ57wIvBZJN-i4uVNSd3Qjtw1yrCpz-vPMvIk7sbODtEAATtPwwapww",
+													"type": "string"
+												}
+											]
+										},
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrlFileUpload}}/organisations/:organisationUuid/sites/:siteUuid/surveys/:surveyUuid/elements/:elementType/:elementUuid/files/:fileUuid",
+											"host": [
+												"{{baseUrlFileUpload}}"
+											],
+											"path": [
+												"organisations",
+												":organisationUuid",
+												"sites",
+												":siteUuid",
+												"surveys",
+												":surveyUuid",
+												"elements",
+												":elementType",
+												":elementUuid",
+												"files",
+												":fileUuid"
+											],
+											"variable": [
+												{
+													"key": "organisationUuid",
+													"value": "{{orgUuid}}",
+													"type": "string"
+												},
+												{
+													"key": "siteUuid",
+													"value": "{{siteUuid}}",
+													"type": "string"
+												},
+												{
+													"key": "surveyUuid",
+													"value": "{{surveyUuid}}",
+													"type": "string",
+													"description": "(Required) "
+												},
+												{
+													"key": "elementType",
+													"value": "raster"
+												},
+												{
+													"key": "elementUuid",
+													"value": "{{rasterUuid}}"
+												},
+												{
+													"key": "fileUuid",
+													"value": "{{fileUploadRasterUuid}}"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Remove raster - wrong orgUuid",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 404\", function () {\r",
+													"    pm.response.to.have.status(404);\r",
+													"});\r",
+													"pm.test(\"Response body status is : 'failure'\", function () {\r",
+													"    pm.expect(pm.response.json().status).to.eql(\"failure\");\r",
+													"});\r",
+													"var errorMessage = \"Resource Not Found\";\r",
+													"pm.test(\"Response body has message as : '\"+errorMessage+\"'\", function () {\r",
+													"    pm.expect(pm.response.json().message).to.eql(errorMessage);\r",
+													"});\r",
+													"pm.test(\"Content-Type is present\", function () {\r",
+													"    pm.response.to.have.header(\"Content-Type\");\r",
+													"});\r",
+													"pm.test(\"Status code name has string\", function () {\r",
+													"    pm.response.to.have.status(\"Not Found\");\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrlFileUpload}}/organisations/:organisationUuid/sites/:siteUuid/surveys/:surveyUuid/elements/:elementType/:elementUuid/files/:fileUuid",
+											"host": [
+												"{{baseUrlFileUpload}}"
+											],
+											"path": [
+												"organisations",
+												":organisationUuid",
+												"sites",
+												":siteUuid",
+												"surveys",
+												":surveyUuid",
+												"elements",
+												":elementType",
+												":elementUuid",
+												"files",
+												":fileUuid"
+											],
+											"variable": [
+												{
+													"key": "organisationUuid",
+													"type": "string",
+													"value": "))"
+												},
+												{
+													"key": "siteUuid",
+													"type": "string",
+													"value": "{{siteUuid}}"
+												},
+												{
+													"description": "(Required) ",
+													"key": "surveyUuid",
+													"type": "string",
+													"value": "{{surveyUuid}}"
+												},
+												{
+													"key": "elementType",
+													"value": "raster"
+												},
+												{
+													"key": "elementUuid",
+													"value": "{{rasterUuid}}"
+												},
+												{
+													"key": "fileUuid",
+													"value": "{{fileUploadRasterUuid}}"
+												}
+											]
+										}
+									},
+									"response": []
+								}
+							],
+							"event": [
+								{
+									"listen": "prerequest",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								},
+								{
+									"listen": "test",
+									"script": {
+										"type": "text/javascript",
+										"exec": [
+											""
+										]
+									}
+								}
+							]
+						},
+						{
+							"name": "A user's API to remove file from a particular element(with sufficient perms)",
+							"item": [
+								{
+									"name": "A user's API to remove file from a particular element(with sufficient perms)",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"pm.test(\"Response body status is equal to : 'success'\", function () {\r",
+													"    pm.expect(pm.response.json().status).to.eql(\"success\");\r",
+													"});\r",
+													"pm.test(\"Content-Type is present\", function () {\r",
+													"    pm.response.to.have.header(\"Content-Type\");\r",
+													"});\r",
+													"pm.test(\"Status code name has string\", function () {\r",
+													"    pm.response.to.have.status(\"OK\");\r",
+													"});\r",
+													"pm.test(\"Response body organisation uuid is as expected\", function () {\r",
+													"    var jsonData = pm.response.json();\r",
+													"    pm.expect(jsonData.data.organisation.uuid).to.eql(pm.environment.get(\"orgUuid\"));\r",
+													"});\r",
+													"pm.test(\"Response body org name is equal to : '\"+pm.environment.get(\"orgName\")+\"'\", function () {\r",
+													"    pm.expect(pm.response.json().data.organisation.name).to.eql(pm.environment.get(\"orgName\"));\r",
+													"});\r",
+													"\r",
+													"var schema = {\r",
+													"  \"$schema\": \"http://json-schema.org/draft-04/schema#\",\r",
+													"  \"type\": \"object\",\r",
+													"  \"properties\": {\r",
+													"    \"status\": {\r",
+													"      \"type\": \"string\"\r",
+													"    },\r",
+													"    \"message\": {\r",
+													"      \"type\": \"string\"\r",
+													"    },\r",
+													"    \"data\": {\r",
+													"      \"type\": \"object\",\r",
+													"      \"properties\": {\r",
+													"        \"organisation\": {\r",
+													"          \"type\": \"object\",\r",
+													"          \"properties\": {\r",
+													"            \"uuid\": {\r",
+													"              \"type\": \"string\"\r",
+													"            },\r",
+													"            \"permalink\": {\r",
+													"              \"type\": \"string\"\r",
+													"            },\r",
+													"            \"name\": {\r",
+													"              \"type\": \"string\"\r",
+													"            },\r",
+													"            \"description\": {\r",
+													"              \"type\": [\"string\", \"null\" ]\r",
+													"            },\r",
+													"            \"createdAt\": {\r",
+													"              \"type\": \"string\"\r",
+													"            },\r",
+													"            \"updatedAt\": {\r",
+													"              \"type\": \"string\"\r",
+													"            },\r",
+													"            \"createdBy\": {\r",
+													"              \"type\": \"string\"\r",
+													"            },\r",
+													"            \"logoUrl\": {\r",
+													"              \"type\": \"null\"\r",
+													"            },\r",
+													"            \"organisationOwner\": {\r",
+													"              \"type\": \"object\",\r",
+													"              \"properties\": {\r",
+													"                \"uuid\": {\r",
+													"                  \"type\": \"string\"\r",
+													"                },\r",
+													"                \"name\": {\r",
+													"                  \"type\": \"string\"\r",
+													"                },\r",
+													"                \"email\": {\r",
+													"                  \"type\": \"string\"\r",
+													"                },\r",
+													"                \"role\": {\r",
+													"                  \"type\": \"null\"\r",
+													"                },\r",
+													"                \"createdAt\": {\r",
+													"                  \"type\": \"string\"\r",
+													"                },\r",
+													"                \"updatedAt\": {\r",
+													"                  \"type\": \"string\"\r",
+													"                },\r",
+													"                \"createdBy\": {\r",
+													"                  \"type\": \"string\"\r",
+													"                }\r",
+													"              },\r",
+													"              \"required\": [\r",
+													"                \"uuid\",\r",
+													"                \"name\",\r",
+													"                \"email\",\r",
+													"                \"role\",\r",
+													"                \"createdAt\",\r",
+													"                \"updatedAt\",\r",
+													"                \"createdBy\"\r",
+													"              ]\r",
+													"            }\r",
+													"          },\r",
+													"          \"required\": [\r",
+													"            \"uuid\",\r",
+													"            \"permalink\",\r",
+													"            \"name\",\r",
+													"            \"description\",\r",
+													"            \"createdAt\",\r",
+													"            \"updatedAt\",\r",
+													"            \"createdBy\",\r",
+													"            \"logoUrl\",\r",
+													"            \"organisationOwner\"\r",
+													"          ]\r",
+													"        }\r",
+													"      },\r",
+													"      \"required\": [\r",
+													"        \"organisation\"\r",
+													"      ]\r",
+													"    }\r",
+													"  },\r",
+													"  \"required\": [\r",
+													"    \"status\",\r",
+													"    \"message\",\r",
+													"    \"data\"\r",
+													"  ]\r",
+													"};\r",
+													"\r",
+													"pm.test('Schema is valid', function() {\r",
+													"    var result = tv4.validateResult(pm.response.json(),schema);\r",
+													"    if(!result.valid){\r",
+													"        console.log(result);\r",
+													"    }\r",
+													"  pm.expect(result.valid).to.be.true;\r",
+													"});"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": "",
+											"options": {
+												"raw": {
+													"language": "json"
+												}
+											}
+										},
+										"url": {
+											"raw": "{{baseUrlFileUpload}}/organisations/:organisationUuid/sites/:siteUuid/surveys/:surveyUuid/elements/:elementType/:elementUuid/files/:fileUuid",
+											"host": [
+												"{{baseUrlFileUpload}}"
+											],
+											"path": [
+												"organisations",
+												":organisationUuid",
+												"sites",
+												":siteUuid",
+												"surveys",
+												":surveyUuid",
+												"elements",
+												":elementType",
+												":elementUuid",
+												"files",
+												":fileUuid"
+											],
+											"variable": [
+												{
+													"key": "organisationUuid",
+													"value": "{{orgUuid}}",
+													"type": "string"
+												},
+												{
+													"key": "siteUuid",
+													"value": "{{siteUuid}}",
+													"type": "string"
+												},
+												{
+													"key": "surveyUuid",
+													"value": "{{surveyUuid}}",
+													"type": "string"
+												},
+												{
+													"key": "elementType",
+													"value": "raster",
+													"type": "string"
+												},
+												{
+													"key": "elementUuid",
+													"value": "{{rasterUuid}}",
+													"type": "string"
+												},
+												{
+													"key": "fileUuid",
+													"value": "",
+													"type": "string"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "User is not logged in",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/v2/organisation/:organisationUuid",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v2",
+														"organisation",
+														":organisationUuid"
+													],
+													"variable": [
+														{
+															"key": "organisationUuid"
+														}
+													]
+												}
+											},
+											"status": "Unauthorized",
+											"code": 401,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										},
+										{
+											"name": "Successful only when a user has access to org",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/v2/organisation/:organisationUuid",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v2",
+														"organisation",
+														":organisationUuid"
+													],
+													"variable": [
+														{
+															"key": "organisationUuid"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n \"status\": \"<string>\",\n \"message\": \"<string>\",\n \"data\": {\n  \"organisation\": {\n   \"name\": \"<string>\",\n   \"description\": \"<string>\",\n   \"permalink\": \"<string>\",\n   \"uuid\": \"<string>\",\n   \"metaData\": {\n    \"userRole\": {}\n   }\n  }\n }\n}"
+										},
+										{
+											"name": "When the get org details call fails internally",
+											"originalRequest": {
+												"method": "GET",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/v2/organisation/:organisationUuid",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v2",
+														"organisation",
+														":organisationUuid"
+													],
+													"variable": [
+														{
+															"key": "organisationUuid"
+														}
+													]
+												}
+											},
+											"status": "Internal Server Error",
+											"code": 500,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								}
+							]
+						},
+						{
+							"name": "CleanUp",
+							"item": [
+								{
+									"name": "Remove a raster (soft delete)",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"pm.test(\"Response body status is : 'success'\", function () {\r",
+													"    pm.expect(pm.response.json().status).to.eql(\"success\");\r",
+													"});\r",
+													"pm.test(\"Response body has message : 'Deleted Project'\", function () {\r",
+													"    pm.expect(pm.response.json().message).to.eql(\"Deleted Raster\");\r",
+													"});\r",
+													"pm.test(\"Content-Type is present\", function () {\r",
+													"    pm.response.to.have.header(\"Content-Type\");\r",
+													"});\r",
+													"pm.test(\"Status code name has string\", function () {\r",
+													"    pm.response.to.have.status(\"OK\");\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/organisations/:organisationUuid/sites/:siteUuid/surveys/:surveyUuid/rasters/:rasterUuid",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"organisations",
+												":organisationUuid",
+												"sites",
+												":siteUuid",
+												"surveys",
+												":surveyUuid",
+												"rasters",
+												":rasterUuid"
+											],
+											"variable": [
+												{
+													"key": "organisationUuid",
+													"value": "{{orgUuid}}",
+													"type": "string"
+												},
+												{
+													"key": "siteUuid",
+													"value": "{{siteUuid}}",
+													"type": "string"
+												},
+												{
+													"key": "surveyUuid",
+													"value": "{{surveyUuid}}",
+													"type": "string"
+												},
+												{
+													"key": "rasterUuid",
+													"value": "{{rasterUuid}}",
+													"type": "string"
+												}
+											]
+										},
+										"description": "This is an api reuqest to delete an annotation."
+									},
+									"response": []
+								},
+								{
+									"name": "Remove a vector (soft delete)",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"pm.test(\"Response body status is : 'success'\", function () {\r",
+													"    pm.expect(pm.response.json().status).to.eql(\"success\");\r",
+													"});\r",
+													"pm.test(\"Response body has message : 'Deleted Project'\", function () {\r",
+													"    pm.expect(pm.response.json().message).to.eql(\"Deleted Vector\");\r",
+													"});\r",
+													"pm.test(\"Content-Type is present\", function () {\r",
+													"    pm.response.to.have.header(\"Content-Type\");\r",
+													"});\r",
+													"pm.test(\"Status code name has string\", function () {\r",
+													"    pm.response.to.have.status(\"OK\");\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/organisations/:organisationUuid/sites/:siteUuid/surveys/:surveyUuid/vectors/:vectorUuid",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"organisations",
+												":organisationUuid",
+												"sites",
+												":siteUuid",
+												"surveys",
+												":surveyUuid",
+												"vectors",
+												":vectorUuid"
+											],
+											"variable": [
+												{
+													"key": "organisationUuid",
+													"value": "{{orgUuid}}",
+													"type": "string"
+												},
+												{
+													"key": "siteUuid",
+													"value": "{{siteUuid}}",
+													"type": "string"
+												},
+												{
+													"key": "surveyUuid",
+													"value": "{{surveyUuid}}",
+													"type": "string"
+												},
+												{
+													"key": "vectorUuid",
+													"value": "{{vectorUuid}}",
+													"type": "string"
+												}
+											]
+										},
+										"description": "This is an api reuqest to delete an annotation."
+									},
+									"response": []
+								},
+								{
+									"name": "Removing the survey created",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"pm.test(\"Response body status is : 'success'\", function () {\r",
+													"    pm.expect(pm.response.json().status).to.eql(\"success\");\r",
+													"});\r",
+													"pm.test(\"Response body has message : 'Deleted Project'\", function () {\r",
+													"    pm.expect(pm.response.json().message).to.eql(\"Deleted Survey\");\r",
+													"});\r",
+													"pm.test(\"Content-Type is present\", function () {\r",
+													"    pm.response.to.have.header(\"Content-Type\");\r",
+													"});\r",
+													"pm.test(\"Status code name has string\", function () {\r",
+													"    pm.response.to.have.status(\"OK\");\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/organisations/:organisationUuid/sites/:siteUuid/surveys/:surveyUuid",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"organisations",
+												":organisationUuid",
+												"sites",
+												":siteUuid",
+												"surveys",
+												":surveyUuid"
+											],
+											"variable": [
+												{
+													"key": "organisationUuid",
+													"value": "{{orgUuid}}",
+													"type": "string"
+												},
+												{
+													"key": "siteUuid",
+													"value": "{{siteUuid}}",
+													"type": "string"
+												},
+												{
+													"key": "surveyUuid",
+													"value": "{{surveyUuid}}",
+													"type": "string"
+												}
+											]
+										}
+									},
+									"response": []
+								},
+								{
+									"name": "Removing the site created",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.test(\"Status code is 200\", function () {\r",
+													"    pm.response.to.have.status(200);\r",
+													"});\r",
+													"pm.test(\"Body matches string : 'success'\", function () {\r",
+													"    pm.expect(pm.response.text()).to.include(\"success\");\r",
+													"});\r",
+													"pm.test(\"Response body has message : 'Deleted Site'\", function () {\r",
+													"    pm.expect(pm.response.json().message).to.eql(\"Deleted Site\");\r",
+													"});\r",
+													"pm.test(\"Content-Type is present\", function () {\r",
+													"    pm.response.to.have.header(\"Content-Type\");\r",
+													"});\r",
+													"pm.test(\"Status code name has string\", function () {\r",
+													"    pm.response.to.have.status(\"OK\");\r",
+													"});\r",
+													""
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"url": {
+											"raw": "{{baseUrl}}/organisations/:organisationUuid/sites/:siteUuid",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"organisations",
+												":organisationUuid",
+												"sites",
+												":siteUuid"
+											],
+											"variable": [
+												{
+													"key": "organisationUuid",
+													"value": "{{orgUuid}}",
+													"type": "string"
+												},
+												{
+													"key": "siteUuid",
+													"value": "{{siteUuid}}",
+													"type": "string"
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "When the delete site call fails internally",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/v2/site/:siteUuid",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v2",
+														"site",
+														":siteUuid"
+													],
+													"variable": [
+														{
+															"key": "siteUuid"
+														}
+													]
+												}
+											},
+											"status": "Internal Server Error",
+											"code": 500,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										},
+										{
+											"name": "User is not logged in",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/v2/site/:siteUuid",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v2",
+														"site",
+														":siteUuid"
+													],
+													"variable": [
+														{
+															"key": "siteUuid"
+														}
+													]
+												}
+											},
+											"status": "Unauthorized",
+											"code": 401,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										},
+										{
+											"name": "Successful only when a user has access to site delete perms",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/v2/site/:siteUuid",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v2",
+														"site",
+														":siteUuid"
+													],
+													"variable": [
+														{
+															"key": "siteUuid"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n \"status\": \"<string>\",\n \"message\": \"<string>\"\n}"
+										}
+									]
+								},
+								{
+									"name": "Removing the org created and reset variables",
+									"event": [
+										{
+											"listen": "test",
+											"script": {
+												"exec": [
+													"pm.environment.clear();"
+												],
+												"type": "text/javascript"
+											}
+										}
+									],
+									"request": {
+										"method": "DELETE",
+										"header": [],
+										"body": {
+											"mode": "raw",
+											"raw": ""
+										},
+										"url": {
+											"raw": "{{baseUrl}}/organisations/:organisationUuid",
+											"host": [
+												"{{baseUrl}}"
+											],
+											"path": [
+												"organisations",
+												":organisationUuid"
+											],
+											"variable": [
+												{
+													"key": "organisationUuid",
+													"value": "{{orgUuid}}",
+													"type": "string",
+													"description": "(Required) "
+												}
+											]
+										}
+									},
+									"response": [
+										{
+											"name": "When the delete org call fails internally",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/v2/organisation/:organisationUuid",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v2",
+														"organisation",
+														":organisationUuid"
+													],
+													"variable": [
+														{
+															"key": "organisationUuid"
+														}
+													]
+												}
+											},
+											"status": "Internal Server Error",
+											"code": 500,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										},
+										{
+											"name": "Successful only when a user has access to org delete perms",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/v2/organisation/:organisationUuid",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v2",
+														"organisation",
+														":organisationUuid"
+													],
+													"variable": [
+														{
+															"key": "organisationUuid"
+														}
+													]
+												}
+											},
+											"status": "OK",
+											"code": 200,
+											"_postman_previewlanguage": "json",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "application/json"
+												}
+											],
+											"cookie": [],
+											"body": "{\n \"status\": \"<string>\",\n \"message\": \"<string>\"\n}"
+										},
+										{
+											"name": "User is not logged in",
+											"originalRequest": {
+												"method": "DELETE",
+												"header": [],
+												"url": {
+													"raw": "{{baseUrl}}/api/v2/organisation/:organisationUuid",
+													"host": [
+														"{{baseUrl}}"
+													],
+													"path": [
+														"api",
+														"v2",
+														"organisation",
+														":organisationUuid"
+													],
+													"variable": [
+														{
+															"key": "organisationUuid"
+														}
+													]
+												}
+											},
+											"status": "Unauthorized",
+											"code": 401,
+											"_postman_previewlanguage": "text",
+											"header": [
+												{
+													"key": "Content-Type",
+													"value": "text/plain"
+												}
+											],
+											"cookie": [],
+											"body": ""
+										}
+									]
+								}
+							]
+						}
+					]
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{authToken}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

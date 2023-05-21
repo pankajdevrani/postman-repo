@@ -1,0 +1,199 @@
+{
+	"id": "b200bb22-08b0-4325-95f3-d8da083db46b",
+	"name": "Staging Env",
+	"values": [
+		{
+			"key": "orgEmailAddress",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "orgName",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "orgOwnerName",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "orgUuid",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "siteName",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "siteUuid",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "surveyName",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "surveyUuid",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "rasterName",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "rasterType",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "rasterUuid",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "vectorName",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "vectorType",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "vectorUuid",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "fileUploadName",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "uploadFileName",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "fileUuidAlphaNumericDelete",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "fileUploadRasterUuid",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "annotationName",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "annotationUuid",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "annotationNameLine",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "annotationUuidLine",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "annotationNamePolygon",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "annotationUuidPolygon",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "editVectorName",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "editVectorType",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "editRasterName",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "editRasterType",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "orgUuidDelete",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "annotationUuidDelete",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "editAnnotationName",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "annoationName",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "invalidType",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "editSurveyName",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "imageListUuid",
+			"value": "",
+			"enabled": true
+		},
+		{
+			"key": "baseUrl",
+			"value": "https://cartisv1-staging.asteria.co.in/api/core/v1",
+			"enabled": true
+		},
+		{
+			"key": "baseUrlAuthz",
+			"value": "https://cartisv1-staging.asteria.co.in/api/authz/v1",
+			"enabled": true
+		},
+		{
+			"key": "baseUrlFileUpload",
+			"value": "https://cartisv1-staging.asteria.co.in/api/file/v1",
+			"enabled": true
+		}
+	],
+	"_postman_variable_scope": "environment",
+	"_postman_exported_at": "2021-02-11T07:37:57.172Z",
+	"_postman_exported_using": "Postman/8.0.5"
+}
